@@ -7,75 +7,118 @@
     <title>Photo Gallery</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f1f1f1;
-}
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+        }
 
-.container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 0 20px;
-}
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
 
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-.menu {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
+        .menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
-.menu a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #333;
-}
+        .menu a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #333;
+        }
 
-.menu a:hover {
-    text-decoration: underline;
-}
+        .menu a:hover {
+            text-decoration: underline;
+        }
 
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 10px;
-}
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-gap: 10px;
+        }
 
-.gallery img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-}
+        .gallery img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer; /* Cursor de puntero para indicar que la imagen es clickeable */
+        }
 
-.gallery img:hover {
-    transform: scale(1.05);
-}
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
 
-@media (max-width: 600px) {
-    .gallery {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-}
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
 
-.uploaded-img-container {
-    margin-top: 20px;
-    text-align: center;
-}
+        .uploaded-img-container {
+            margin-top: 20px;
+            text-align: center;
+        }
 
-.uploaded-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
-}
+        .uploaded-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+
+        /* Estilo para la ventana modal */
+        .modal {
+            display: none; /* Ocultar la ventana modal de forma predeterminada */
+            position: fixed; /* Posición fija */
+            z-index: 1; /* Ubicar la ventana por encima de otros elementos */
+            padding-top: 50px; /* Espacio arriba de la ventana */
+            left: 0;
+            top: 0;
+            width: 100%; /* Ancho de la ventana */
+            height: 100%; /* Altura de la ventana */
+            overflow: auto; /* Habilitar desplazamiento si la imagen es demasiado grande */
+            background-color: rgb(0,0,0); /* Fondo negro */
+            background-color: rgba(0,0,0,0.9); /* Fondo negro con transparencia */
+        }
+
+        /* Estilo para el contenido de la ventana modal */
+        .modal-content {
+            margin: auto; /* Centrar la imagen */
+            display: block;
+            width: 80%; /* Ancho de la imagen */
+            max-width: 700px; /* Ancho máximo de la imagen */
+            max-height: 80%; /* Altura máxima de la imagen */
+        }
+
+        /* Estilo para el botón de cerrar */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -91,6 +134,11 @@ h1 {
         <div class="uploaded-img-container" id="uploadedImgContainer"></div>
         <div class="gallery" id="gallery"></div>
     </div>
+    <!-- Ventana modal para vista previa -->
+    <div id="previewModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="previewImage">
+    </div>
     <script>
         window.onload = () => {
             fetch('/photos')
@@ -100,39 +148,22 @@ h1 {
                     data.forEach(photo => {
                         const img = document.createElement('img');
                         img.src = `/uploads/${photo.filename}`;
+                        img.addEventListener('click', function() {
+                            const modal = document.getElementById('previewModal');
+                            const modalImg = document.getElementById('previewImage');
+                            modal.style.display = 'block';
+                            modalImg.src = this.src;
+                        });
                         gallery.appendChild(img);
                     });
                 })
                 .catch(error => console.error('Error fetching photos:', error));
         };
 
-        // Formulario de subida de fotos
-        const form = document.querySelector('form');
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const formData = new FormData(form);
-
-            try {
-                const response = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-                if (response.status === 200) {
-                    const uploadedImgContainer = document.getElementById('uploadedImgContainer');
-                    const uploadedImg = document.createElement('img');
-                    uploadedImg.src = `/uploads/${data.filename}`;
-                    uploadedImg.className = 'uploaded-img';
-                    uploadedImgContainer.appendChild(uploadedImg);
-                } else {
-                    alert('Error uploading photo');
-                }
-            } catch (error) {
-                console.error('Error uploading photo:', error);
-            }
-
+        // Cerrar la ventana modal al hacer clic en el botón de cerrar
+        document.getElementsByClassName('close')[0].addEventListener('click', function() {
+            document.getElementById('previewModal').style.display = 'none';
         });
-
     </script>
 </body>
 </html>
