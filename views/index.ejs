@@ -5,128 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f1f1f1;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .menu {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .menu a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .menu a:hover {
-            text-decoration: underline;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            grid-gap: 10px;
-        }
-
-        .gallery img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-            cursor: pointer; /* Cursor de puntero para indicar que la imagen es clickeable */
-        }
-
-        .gallery img:hover {
-            transform: scale(1.05);
-        }
-
-        @media (max-width: 600px) {
-            .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-        }
-
-        .uploaded-img-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .uploaded-img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
-        }
-
-        /* Estilo para la ventana modal */
-        .modal {
-            display: none; /* Ocultar la ventana modal de forma predeterminada */
-            position: fixed; /* Posición fija */
-            z-index: 1; /* Ubicar la ventana por encima de otros elementos */
-            padding-top: 50px; /* Espacio arriba de la ventana */
-            left: 0;
-            top: 0;
-            width: 100%; /* Ancho de la ventana */
-            height: 100%; /* Altura de la ventana */
-            overflow: auto; /* Habilitar desplazamiento si la imagen es demasiado grande */
-            background-color: rgb(0,0,0); /* Fondo negro */
-            background-color: rgba(0,0,0,0.9); /* Fondo negro con transparencia */
-        }
-
-        /* Estilo para el contenido de la ventana modal */
-        .modal-content {
-            margin: auto; /* Centrar la imagen */
-            display: block;
-            width: 80%; /* Ancho de la imagen */
-            max-width: 700px; /* Ancho máximo de la imagen */
-            max-height: 80%; /* Altura máxima de la imagen */
-        }
-
-        /* Estilo para el botón de cerrar */
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="/public/styles.css">
 </head>
 <body>
     <div class="container">
-        <div class="menu">
-            <a href="/">Home</a>
-        </div>
         <h1>Photo Gallery</h1>
+        <div class="menu">
+            <a href="#">Home</a>
+            <!-- Agrega más enlaces aquí según sea necesario -->
+        </div>
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="file" name="photo" accept="image/*">
             <button type="submit">Upload</button>
