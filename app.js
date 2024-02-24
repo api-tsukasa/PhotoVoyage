@@ -12,6 +12,13 @@ const upload = multer({ dest: 'uploads/' });
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+// Configuracion del CSS
+app.get('/public/styles.css', function(req, res) {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(__dirname + '/public/styles.css');
+  });
+  
+
 // Configurar Express para servir archivos estáticos desde la carpeta "uploads"
 app.use('/uploads', express.static('uploads'));
 
