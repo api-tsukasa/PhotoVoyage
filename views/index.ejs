@@ -10,10 +10,21 @@
 <body>
     <div class="container">
         <h1>Photo Gallery</h1>
-        <div class="menu">
-            <a href="#">Home</a>
-            <!-- Agrega más enlaces aquí según sea necesario -->
-        </div>
+
+        <div class="menu-toggle" id="menuToggle">
+            <!-- Ícono inicial del menú -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+            </svg>
+            
+            <!-- Contenido del menú -->
+            <div class="dropdown-content" id="dropdownContent">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>        
+
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="file" name="photo" accept="image/*">
             <button type="submit">Upload</button>
@@ -27,6 +38,16 @@
         <img class="modal-content" id="previewImage">
     </div>
     <script>
+
+    var menuToggle = document.getElementById("menuToggle");
+    var menuIcon = document.getElementById("menuIcon");
+
+    // Agregar un evento de clic al botón de menú
+    menuToggle.addEventListener("click", function() {
+        // Alternar la clase 'active' en el botón de menú
+        menuToggle.classList.toggle("active");
+    });
+
         window.onload = () => {
             fetch('/photos')
                 .then(response => response.json())
