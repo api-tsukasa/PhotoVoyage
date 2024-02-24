@@ -7,54 +7,62 @@
     <title>Photo Gallery</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f1f1f1;
-        }
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+}
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
 
-        h1 {
-            text-align: center;
-        }
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        form {
-            margin-bottom: 20px;
-        }
+.menu {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
 
-        #gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            grid-gap: 10px;
-        }
+.menu a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
 
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
+.menu a:hover {
+    text-decoration: underline;
+}
 
-        .menu {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+}
 
-        .menu a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #333;
-        }
+.gallery img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
 
-        .menu a:hover {
-            text-decoration: underline;
-        }
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
     </style>
 </head>
 <body>
