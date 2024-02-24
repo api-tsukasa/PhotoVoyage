@@ -104,17 +104,15 @@ h1 {
                     body: formData
                 });
                 const data = await response.json();
-                if (response.ok) {
-                    alert('Image uploaded successfully! Please reload the page.');
+                if (response.status === 200) {
                     setTimeout(() => {
                         location.reload();
                     }, 3000);
                 } else {
-                    alert('Error uploading image.');
+                    alert('Error uploading photo');
                 }
             } catch (error) {
                 console.error('Error uploading photo:', error);
-                alert('Error uploading image.');
             }
 
         });
