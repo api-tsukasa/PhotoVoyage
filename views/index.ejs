@@ -63,6 +63,19 @@ h1 {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
+
+.uploaded-img-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.uploaded-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
     </style>
 </head>
 <body>
@@ -75,7 +88,8 @@ h1 {
             <input type="file" name="photo" accept="image/*">
             <button type="submit">Upload</button>
         </form>
-        <div id="gallery"></div>
+        <div class="uploaded-img-container" id="uploadedImgContainer"></div>
+        <div class="gallery" id="gallery"></div>
     </div>
     <script>
         window.onload = () => {
@@ -105,9 +119,11 @@ h1 {
                 });
                 const data = await response.json();
                 if (response.status === 200) {
-                    setTimeout(() => {
-                        location.reload();
-                    }, 3000);
+                    const uploadedImgContainer = document.getElementById('uploadedImgContainer');
+                    const uploadedImg = document.createElement('img');
+                    uploadedImg.src = `/uploads/${data.filename}`;
+                    uploadedImg.className = 'uploaded-img';
+                    uploadedImgContainer.appendChild(uploadedImg);
                 } else {
                     alert('Error uploading photo');
                 }
