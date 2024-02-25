@@ -7,7 +7,27 @@
     <link rel="stylesheet" href="/public/admin.css">
 </head>
 <body>
+
+    <div class="menu-toggle" id="menuToggle">
+        <!-- Ícono inicial del menú -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+        
+        <!-- Contenido del menú -->
+        <div class="dropdown-content" id="dropdownContent">
+            <a href="/">Home</a>
+            <a href="/admin">Admin Panel</a>
+            <a href="#">Link 3</a>
+        </div>
+    </div>
+
     <h1>Admin Panel</h1>
+    <form action="/admin/search" method="get">
+        <label for="id">Search by ID:</label>
+        <input type="text" id="id" name="id">
+        <button type="submit">Search</button>
+    </form>
     <ul>
         <% photos.forEach(photo => { %>
             <li>
@@ -20,5 +40,18 @@
             </li>
         <% }); %>
     </ul>
+
+    <script>
+
+    var menuToggle = document.getElementById("menuToggle");
+    var menuIcon = document.getElementById("menuIcon");
+
+    // Agregar un evento de clic al botón de menú
+    menuToggle.addEventListener("click", function() {
+        // Alternar la clase 'active' en el botón de menú
+        menuToggle.classList.toggle("active");
+    });
+
+    </script>
 </body>
 </html>
