@@ -1,4 +1,4 @@
-/* styles.css */
+/* admin.css */
 
 /* Reset CSS */
 * {
@@ -17,6 +17,12 @@ body {
     max-width: 1100px; /* Se ha aumentado el ancho máximo del contenedor para adaptarse a pantallas más grandes */
     margin: 0 auto;
     padding: 40px; /* Se ha aumentado el relleno para crear más espacio entre los contenidos y los bordes del contenedor */
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr; /* Una columna para la barra lateral y otra para el contenido principal */
+    gap: 20px; /* Espacio entre las columnas */
 }
 
 h1 {
