@@ -16,8 +16,7 @@ app.set('views', __dirname + '/views');
 app.get('/public/styles.css', function(req, res) {
     res.setHeader('Content-Type', 'text/css');
     res.sendFile(__dirname + '/public/styles.css');
-  });
-  
+});
 
 // Configurar Express para servir archivos estáticos desde la carpeta "uploads"
 app.use('/uploads', express.static('uploads'));
@@ -72,7 +71,29 @@ app.get('/', (req, res) => {
     });
 });
 
+// Ruta para el panel de administradores
+app.get('/admin', (req, res) => {
+    db.all('SELECT * FROM photos', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Failed to fetch photos');
+        }
+        res.render('admin', { photos: rows });
+    });
+});
+
+// Ruta para eliminar una foto
+app.post('/admin/delete/:id', (req, res) => {
+    const id = req.params.id;
+    db.run('DELETE FROM photos WHERE id = ?', id, (err) => {
+        if (err) {
+            return res.status(500).send('Failed to delete photo');
+        }
+        res.redirect('/admin');
+    });
+});
+
 // Iniciar el servidor
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
+    console.log(`Admin Server running at http://localhost:${port}/admin`)
 });
