@@ -88,6 +88,21 @@ app.get('/admin', (req, res) => {
     });
 });
 
+// Ruta para buscar una foto por ID
+app.get('/admin/search', (req, res) => {
+    const id = req.query.id;
+    if (!id) {
+        return res.redirect('/admin');
+    }
+
+    db.get('SELECT * FROM photos WHERE id = ?', id, (err, row) => {
+        if (err || !row) {
+            return res.status(404).send('Photo not found');
+        }
+        res.render('search', { photo: row });
+    });
+});
+
 // Ruta para eliminar una foto
 app.post('/admin/delete/:id', (req, res) => {
     const id = req.params.id;
