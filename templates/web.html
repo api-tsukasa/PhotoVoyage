@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - Text</title>
+    <link rel="stylesheet" href="/public/your-css">
+</head>
+<body>
+    <div class="container">
+        <h1>Photo Gallery</h1>
+
+        <div class="menu-toggle" id="menuToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+            </svg>
+            
+            <div class="dropdown-content" id="dropdownContent">
+                <a href="#">Text1</a>
+                <a href="#">Text2</a>
+                <a href="#">Text3</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var menuToggle = document.getElementById("menuToggle");
+        var menuIcon = document.getElementById("menuIcon");
+
+        menuToggle.addEventListener("click", function() {
+            menuToggle.classList.toggle("active");
+        });
+
+    </script>
+</body>
+</html>
