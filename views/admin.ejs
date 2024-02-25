@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <ul>
+        <% photos.forEach(photo => { %>
+            <li>
+                <img src="/uploads/<%= photo.filename %>" alt="Photo">
+                <form action="/admin/delete/<%= photo.id %>" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
