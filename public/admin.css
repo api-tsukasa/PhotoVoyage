@@ -1,0 +1,78 @@
+/* styles.css */
+
+/* Reset CSS */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif; /* Se ha cambiado la fuente a 'Poppins' para un aspecto más moderno */
+    background-color: #f9f9f9;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px; /* Se ha aumentado el ancho máximo del contenedor para adaptarse a pantallas más grandes */
+    margin: 0 auto;
+    padding: 40px; /* Se ha aumentado el relleno para crear más espacio entre los contenidos y los bordes del contenedor */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 40px; /* Se ha aumentado el margen inferior del título para crear más separación */
+    font-size: 2.5rem; /* Se ha aumentado el tamaño del título para un aspecto más impactante */
+}
+
+ul {
+    padding-left: 0;
+}
+
+li {
+    margin-bottom: 40px; /* Se ha aumentado el margen inferior de los elementos de la lista */
+    padding: 30px; /* Se ha aumentado el relleno para crear un aspecto más espacioso */
+    border-radius: 12px; /* Se ha aumentado el radio de borde para esquinas más redondeadas */
+    background-color: #fff;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1); /* Se ha aumentado ligeramente el tamaño de la sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Se ha añadido una transición para la transformación y la sombra */
+}
+
+li:hover {
+    transform: translateY(-10px); /* Se ha aumentado ligeramente la distancia de elevación al pasar el cursor por encima */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Se ha aumentado ligeramente el tamaño de la sombra al pasar el cursor por encima */
+}
+
+li p {
+    color: #777; /* Se ha ajustado ligeramente el color del texto para mejorar la legibilidad */
+    font-size: 1rem; /* Se ha ajustado el tamaño del texto para una mejor proporción con respecto al contenedor */
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+button {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 14px 28px; /* Se ha ajustado ligeramente el tamaño del botón */
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #ff3333;
+    transform: scale(1.1); /* Se ha aumentado ligeramente la escala al pasar el cursor por encima */
+}
