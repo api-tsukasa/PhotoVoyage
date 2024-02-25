@@ -76,3 +76,65 @@ button:hover {
     background-color: #ff3333;
     transform: scale(1.1); /* Se ha aumentado ligeramente la escala al pasar el cursor por encima */
 }
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px; /* Espaciado superior para separar el botón del resto del contenido */
+    text-decoration: none;
+    color: #333;
+    padding: 10px 20px; /* Ajuste del relleno para un aspecto más equilibrado */
+    background-color: #f9f9f9;
+    border: 2px solid #333;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.back-link:hover {
+    background-color: #333;
+    color: #f9f9f9;
+    transform: translateY(-3px); /* Efecto de elevación al pasar el cursor por encima */
+}
+
+.menu-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    animation: slideDown 0.5s ease forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.menu-toggle.active .dropdown-content {
+    display: block;
+}
