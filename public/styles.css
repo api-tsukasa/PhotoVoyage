@@ -64,13 +64,14 @@ h1 {
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Distribuir las imágenes en filas */
+    grid-auto-rows: minmax(200px, auto); /* Altura mínima de 200px */
+    grid-gap: 20px; /* Espacio entre las imágenes */
 }
 
 .gallery img {
-    max-width: 100%;
-    height: auto;
+    width: 100%; /* Las imágenes ocupan todo el ancho disponible */
+    height: auto; /* Altura automática para mantener la proporción */
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
@@ -83,7 +84,7 @@ h1 {
 
 @media (max-width: 600px) {
     .gallery {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 }
 
