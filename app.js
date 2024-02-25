@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -84,16 +85,27 @@ app.get('/admin', (req, res) => {
 // Ruta para eliminar una foto
 app.post('/admin/delete/:id', (req, res) => {
     const id = req.params.id;
-    db.run('DELETE FROM photos WHERE id = ?', id, (err) => {
-        if (err) {
-            return res.status(500).send('Failed to delete photo');
+    db.get('SELECT * FROM photos WHERE id = ?', id, (err, row) => {
+        if (err || !row) {
+            return res.status(404).send('Photo not found');
         }
-        res.redirect('/admin');
+        const filename = row.filename;
+        fs.unlink(`uploads/${filename}`, (err) => {
+            if (err) {
+                return res.status(500).send('Failed to delete photo file');
+            }
+            db.run('DELETE FROM photos WHERE id = ?', id, (err) => {
+                if (err) {
+                    return res.status(500).send('Failed to delete photo from database');
+                }
+                res.redirect('/admin');
+            });
+        });
     });
 });
 
 // Iniciar el servidor
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
-    console.log(`Admin Server running at http://localhost:${port}/admin`)
+    console.log(`Admin Server running at http://localhost:${port}/admin`);
 });
