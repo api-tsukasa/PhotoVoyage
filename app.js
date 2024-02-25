@@ -127,6 +127,12 @@ app.post('/admin/delete/:id', (req, res) => {
 
 // Iniciar el servidor
 app.listen(port, () => {
+    console.log(`The local server is being turned on please log in to the web from these links`)
+    console.log(``)
     console.log(`Server running at http://localhost:${port}`);
     console.log(`Admin Server running at http://localhost:${port}/admin`);
+    console.log(``)
+    console.log(`Support:`)
+    console.log(`Github: https://github.com/api-tsukasa/PhotoVoyage/`)
+    console.log(`Report bugs: https://github.com/api-tsukasa/PhotoVoyage/issues`)
 });
