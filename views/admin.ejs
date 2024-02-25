@@ -35,8 +35,10 @@
                     <% photos.forEach(photo => { %>
                         <li>
                             <img src="/uploads/<%= photo.filename %>" alt="Photo" id="photo_<%= photo.id %>">
+                            <br>
                             <p>File Name: <%= photo.filename %></p>
-                            <p>ID: <%= photo.id %></p> <!-- Nuevo párrafo para mostrar el ID -->
+                            <p>ID: <%= photo.id %></p>
+                            <p>Database: photos.db</p>
                             <form action="/admin/delete/<%= photo.id %>" method="post">
                                 <button type="submit">Delete</button>
                             </form>
