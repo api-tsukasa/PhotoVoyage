@@ -7,54 +7,60 @@
     padding: 0;
 }
 
+/* Body Styles */
 body {
-    font-family: 'Poppins', sans-serif; /* Se ha cambiado la fuente a 'Poppins' para un aspecto más moderno */
+    font-family: 'Poppins', sans-serif;
     background-color: #f9f9f9;
     line-height: 1.6;
 }
 
+/* Container Styles */
 .container {
-    max-width: 1100px; /* Se ha aumentado el ancho máximo del contenedor para adaptarse a pantallas más grandes */
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 40px; /* Se ha aumentado el relleno para crear más espacio entre los contenidos y los bordes del contenedor */
+    padding: 40px;
 }
 
+/* Admin Grid */
 .admin-grid {
     display: grid;
-    grid-template-columns: 200px 1fr; /* Una columna para la barra lateral y otra para el contenido principal */
-    gap: 20px; /* Espacio entre las columnas */
+    grid-template-columns: 200px 1fr;
+    gap: 20px;
 }
 
+/* Heading Styles */
 h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 40px; /* Se ha aumentado el margen inferior del título para crear más separación */
-    font-size: 2.5rem; /* Se ha aumentado el tamaño del título para un aspecto más impactante */
+    margin-bottom: 40px;
+    font-size: 2.5rem;
 }
 
+/* List Styles */
 ul {
     padding-left: 0;
 }
 
 li {
-    margin-bottom: 40px; /* Se ha aumentado el margen inferior de los elementos de la lista */
-    padding: 30px; /* Se ha aumentado el relleno para crear un aspecto más espacioso */
-    border-radius: 12px; /* Se ha aumentado el radio de borde para esquinas más redondeadas */
+    margin-bottom: 40px;
+    padding: 30px;
+    border-radius: 12px;
     background-color: #fff;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1); /* Se ha aumentado ligeramente el tamaño de la sombra */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Se ha añadido una transición para la transformación y la sombra */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 li:hover {
-    transform: translateY(-10px); /* Se ha aumentado ligeramente la distancia de elevación al pasar el cursor por encima */
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Se ha aumentado ligeramente el tamaño de la sombra al pasar el cursor por encima */
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
 }
 
 li p {
-    color: #777; /* Se ha ajustado ligeramente el color del texto para mejorar la legibilidad */
-    font-size: 1rem; /* Se ha ajustado el tamaño del texto para una mejor proporción con respecto al contenedor */
+    color: #777;
+    font-size: 1rem;
 }
 
+/* Image Styles */
 img {
     max-width: 50%;
     display: block;
@@ -63,16 +69,18 @@ img {
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Form Styles */
 form {
     text-align: center;
     margin-bottom: 40px;
 }
 
+/* Button Styles */
 button {
     background-color: #ff4d4d;
     color: #fff;
     border: none;
-    padding: 14px 28px; /* Se ha ajustado ligeramente el tamaño del botón */
+    padding: 14px 28px;
     cursor: pointer;
     border-radius: 12px;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -80,15 +88,16 @@ button {
 
 button:hover {
     background-color: #ff3333;
-    transform: scale(1.1); /* Se ha aumentado ligeramente la escala al pasar el cursor por encima */
+    transform: scale(1.1);
 }
 
+/* Back Link Styles */
 .back-link {
     display: inline-block;
-    margin-top: 20px; /* Espaciado superior para separar el botón del resto del contenido */
+    margin-top: 20px;
     text-decoration: none;
     color: #333;
-    padding: 10px 20px; /* Ajuste del relleno para un aspecto más equilibrado */
+    padding: 10px 20px;
     background-color: #f9f9f9;
     border: 2px solid #333;
     border-radius: 5px;
@@ -98,9 +107,10 @@ button:hover {
 .back-link:hover {
     background-color: #333;
     color: #f9f9f9;
-    transform: translateY(-3px); /* Efecto de elevación al pasar el cursor por encima */
+    transform: translateY(-3px);
 }
 
+/* Menu Toggle */
 .menu-toggle {
     position: absolute;
     top: 20px;
@@ -109,6 +119,7 @@ button:hover {
     cursor: pointer;
 }
 
+/* Dropdown Styles */
 .dropdown-content {
     display: none;
     position: absolute;
