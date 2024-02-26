@@ -30,6 +30,12 @@ app.get('/public/admin.css', function(req, res) {
     res.sendFile(__dirname + '/public/admin.css');
 });
 
+// login && Register css
+app.get('/public/login.css', function(req, res) {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(__dirname + '/public/login.css');
+});
+
 // Configurar Express para servir archivos estáticos desde la carpeta "uploads"
 app.use('/uploads', express.static('uploads'));
 
