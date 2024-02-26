@@ -36,6 +36,12 @@ app.get('/public/login.css', function(req, res) {
     res.sendFile(__dirname + '/public/login.css');
 });
 
+// admin-users css
+app.get('/public/admin-user.css', function(req, res) {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(__dirname + '/public/admin-user.css');
+});
+
 // Configurar Express para servir archivos estáticos desde la carpeta "uploads"
 app.use('/uploads', express.static('uploads'));
 
@@ -183,6 +189,16 @@ app.get('/admin/search', (req, res) => {
             return res.status(404).send('Photo not found');
         }
         res.render('search', { photo: row });
+    });
+});
+
+// Ruta para mostrar la página de administración de usuarios
+app.get('/admin-users', (req, res) => {
+    userDB.all('SELECT * FROM users', (err, rows) => {
+        if (err) {
+            return res.status(500).send('Failed to fetch users');
+        }
+        res.render('admin-users', { users: rows });
     });
 });
 
