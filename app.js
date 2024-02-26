@@ -215,7 +215,7 @@ app.get('/admin-users/:id', (req, res) => {
         if (err || !row) {
             return res.status(404).send('User not found');
         }
-        res.render('user-details', { user: row });
+        res.render('user-details', { user: row, userId: userId }); // Pasar userId a la plantilla
     });
 });
 
