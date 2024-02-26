@@ -42,6 +42,12 @@ app.get('/public/admin-user.css', function(req, res) {
     res.sendFile(__dirname + '/public/admin-user.css');
 });
 
+// user-details.css
+app.get('/public/user-details.css', function(req, res) {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(__dirname + '/public/user-details.css');
+});
+
 // Configurar Express para servir archivos estáticos desde la carpeta "uploads"
 app.use('/uploads', express.static('uploads'));
 
@@ -199,6 +205,17 @@ app.get('/admin-users', (req, res) => {
             return res.status(500).send('Failed to fetch users');
         }
         res.render('admin-users', { users: rows });
+    });
+});
+
+// Ruta para obtener la información de un usuario por ID y mostrarla en una página separada
+app.get('/admin-users/:id', (req, res) => {
+    const userId = req.params.id;
+    userDB.get('SELECT * FROM users WHERE id = ?', userId, (err, row) => {
+        if (err || !row) {
+            return res.status(404).send('User not found');
+        }
+        res.render('user-details', { user: row });
     });
 });
 
