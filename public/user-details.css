@@ -7,13 +7,44 @@ body {
     padding: 0;
 }
 
+.user-details {
+    background-color: #fff;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
 h1 {
     color: #333;
-    text-align: center;
+}
+
+.details-container {
+    margin-top: 20px;
 }
 
 p {
     color: #666;
-    font-size: 18px;
-    margin-left: 20px;
+    font-size: 16px;
+}
+
+#username {
+    font-weight: bold;
+    color: #333;
+}
+
+.btn-back {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.btn-back:hover {
+    background-color: #ddd;
 }
