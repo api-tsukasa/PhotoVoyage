@@ -8,11 +8,67 @@
     <title>Admin Users</title>
 </head>
 <body>
+    <div class="menu-toggle" id="menuToggle">
+        <!-- Ícono inicial del menú -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+        
+        <!-- Contenido del menú -->
+        <div class="dropdown-content" id="dropdownContent">
+            <a href="/">Home</a>
+            <a href="/admin">Admin Panel</a>
+        </div>
+    </div>
+
     <h1>Registered Users</h1>
-    <ul>
+    <ul class="user-list">
         <% users.forEach(user => { %>
-            <li><%= user.username %></li>
+            <li class="user-item"><a href="#" class="user-link" data-id="<%= user.id %>"><%= user.username %></a></li>
         <% }); %>
     </ul>
+
+    <!-- Script para manejar clics en enlaces de usuario -->
+    <script>
+        var menuToggle = document.getElementById("menuToggle");
+        var menuIcon = document.getElementById("menuIcon");
+
+        // Agregar un evento de clic al botón de menú
+        menuToggle.addEventListener("click", function() {
+            // Alternar la clase 'active' en el botón de menú
+            menuToggle.classList.toggle("active");
+        });
+
+        // Mostrar los elementos gradualmente
+        document.addEventListener("DOMContentLoaded", function() {
+            var userItems = document.querySelectorAll(".user-item");
+
+            // Agregar la clase 'show' con un retraso escalonado
+            userItems.forEach(function(item, index) {
+                setTimeout(function() {
+                    item.classList.add("show");
+                }, index * 100); // Ajusta el retraso según lo desees
+            });
+        });
+
+        document.querySelectorAll('.user-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const userId = this.getAttribute('data-id');
+                fetch(`/admin-users/${userId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        // Aquí puedes manejar la respuesta del servidor, por ejemplo, redirigiendo a una nueva página
+                        window.location.href = `/admin-users/${userId}`;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
 </body>
 </html>
