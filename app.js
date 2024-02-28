@@ -73,7 +73,7 @@ app.use(session({
 
 // Función para verificar si el usuario es un administrador
 function isAdmin(username) {
-    const xmlData = fs.readFileSync('/private/admins.xml', 'utf8');
+    const xmlData = fs.readFileSync('private/admins.xml', 'utf8'); // Cambiar la ruta a 'private/admins.xml'
     let isAdmin = false;
 
     parseString(xmlData, (err, result) => {
