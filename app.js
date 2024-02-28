@@ -4,6 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const { parseString } = require('xml2js');
 
 const app = express();
 const port = 3000;
@@ -63,12 +64,47 @@ userDB.serialize(() => {
     userDB.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)');
 });
 
-// Configurar middleware para sesiones
+// Configuración de middleware para sesiones
 app.use(session({
     secret: 'secret-key',
     resave: false,
     saveUninitialized: false
 }));
+
+// Función para verificar si el usuario es un administrador
+function isAdmin(username) {
+    const xmlData = fs.readFileSync('/private/admins.xml', 'utf8');
+    let isAdmin = false;
+
+    parseString(xmlData, (err, result) => {
+        if (err) {
+            console.error('Failed to parse XML file');
+            return;
+        }
+        const admins = result.admins.admin;
+        for (let i = 0; i < admins.length; i++) {
+            if (admins[i] === username) {
+                isAdmin = true;
+                break;
+            }
+        }
+    });
+
+    return isAdmin;
+}
+
+// Proteger rutas que requieren inicio de sesión
+function requireLogin(req, res, next) {
+    if (req.session.isLoggedIn) {
+        // Verificar si el usuario es un administrador
+        if (isAdmin(req.session.username)) {
+            return next();
+        } else {
+            return res.status(403).send('Unauthorized');
+        }
+    }
+    res.redirect('/login');
+}
 
 // Registro de usuario
 app.post('/register', async (req, res) => {
@@ -104,14 +140,6 @@ app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/');
 });
-
-// Proteger rutas que requieren inicio de sesión
-function requireLogin(req, res, next) {
-    if (req.session.isLoggedIn) {
-        return next();
-    }
-    res.redirect('/login');
-}
 
 // Ruta para subir fotos
 app.post('/upload', upload.single('photo'), (req, res) => {
@@ -174,7 +202,7 @@ app.get('/', (req, res) => {
 });
 
 // Ruta para el panel de administradores
-app.get('/admin', (req, res) => {
+app.get('/admin', requireAdmin, (req, res) => {
     db.all('SELECT * FROM photos', (err, rows) => {
         if (err) {
             return res.status(500).send('Failed to fetch photos');
@@ -183,8 +211,17 @@ app.get('/admin', (req, res) => {
     });
 });
 
+// Middleware para verificar si el usuario es un administrador
+function requireAdmin(req, res, next) {
+    if (req.session.isLoggedIn && isAdmin(req.session.username)) {
+        return next();
+    } else {
+        return res.status(403).send('Unauthorized');
+    }
+}
+
 // Ruta para buscar una foto por ID
-app.get('/admin/search', (req, res) => {
+app.get('/admin/search', requireLogin, (req, res) => {
     const id = req.query.id;
     if (!id) {
         return res.redirect('/admin');
@@ -199,7 +236,7 @@ app.get('/admin/search', (req, res) => {
 });
 
 // Ruta para mostrar la página de administración de usuarios
-app.get('/admin-users', (req, res) => {
+app.get('/admin-users', requireLogin, (req, res) => {
     userDB.all('SELECT * FROM users', (err, rows) => {
         if (err) {
             return res.status(500).send('Failed to fetch users');
@@ -209,7 +246,7 @@ app.get('/admin-users', (req, res) => {
 });
 
 // Ruta para obtener la información de un usuario por ID y mostrarla en una página separada
-app.get('/admin-users/:id', (req, res) => {
+app.get('/admin-users/:id', requireLogin, (req, res) => {
     const userId = req.params.id;
     userDB.get('SELECT * FROM users WHERE id = ?', userId, (err, row) => {
         if (err || !row) {
@@ -220,7 +257,7 @@ app.get('/admin-users/:id', (req, res) => {
 });
 
 // Ruta para eliminar una foto
-app.post('/admin/delete/:id', (req, res) => {
+app.post('/admin/delete/:id', requireLogin, (req, res) => {
     const id = req.params.id;
     db.get('SELECT * FROM photos WHERE id = ?', id, (err, row) => {
         if (err || !row) {
