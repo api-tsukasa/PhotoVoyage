@@ -2,22 +2,24 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
 }
 
 .container {
     width: 360px;
-    margin: 100px auto;
-    padding: 20px;
+    margin: 80px auto;
+    padding: 40px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 h2 {
     text-align: center;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
 }
 
 form {
@@ -25,37 +27,62 @@ form {
     flex-direction: column;
 }
 
+.form-group {
+    margin-bottom: 20px;
+}
+
 label {
-    margin-bottom: 8px;
     color: #555;
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
 }
 
 input[type="text"],
 input[type="password"] {
-    padding: 8px;
-    margin-bottom: 16px;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #ff4d4d;
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #007bff;
+    padding: 12px 0;
+    background-color: #ff4d4d;
     color: #fff;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    text-transform: uppercase;
+    transition: transform 0.3s ease-in-out;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #e44747;
+    transform: scale(1.05);
 }
 
 .message {
     text-align: center;
     color: #ff6347;
     margin-top: 16px;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
