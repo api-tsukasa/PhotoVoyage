@@ -5,9 +5,33 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const { parseString } = require('xml2js');
+const { createCanvas } = require('canvas');
+const canvas = createCanvas(200, 50);
+const ctx = canvas.getContext('2d');
 
 const app = express();
 const port = 3000;
+
+function generateCaptcha() {
+    const operators = ['+', '-', '*'];
+    const num1 = Math.floor(Math.random() * 10);
+    const num2 = Math.floor(Math.random() * 10);
+    const operator = operators[Math.floor(Math.random() * operators.length)];
+    const question = `${num1} ${operator} ${num2}`;
+    let answer;
+    switch (operator) {
+        case '+':
+            answer = num1 + num2;
+            break;
+        case '-':
+            answer = num1 - num2;
+            break;
+        case '*':
+            answer = num1 * num2;
+            break;
+    }
+    return { question: question, answer: answer };
+}
 
 // Multer configuration for uploading files
 const upload = multer({ dest: 'uploads/' });
@@ -113,7 +137,13 @@ function requireLogin(req, res, next) {
 
 // user register
 app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, captcha, answer } = req.body;
+    const actualAnswer = req.session.captcha;
+
+    if (parseInt(captcha) !== actualAnswer) {
+        req.session.message = 'Incorrect answer, please try again.';
+        return res.redirect('/register');
+    }
 
     userDB.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
         if (err) {
@@ -208,7 +238,9 @@ app.use((req, res, next) => {
 
 // Path to display the registration page
 app.get('/register', (req, res) => {
-    res.render('register', { message: req.session.message });
+    const captcha = generateCaptcha();
+    req.session.captcha = captcha.answer;
+    res.render('register', { message: req.session.message, captcha: { question: captcha.question, answer: captcha.answer } });
 });
 
 // Path to display the main page with the photo gallery
