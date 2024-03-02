@@ -216,7 +216,7 @@ app.get('/', (req, res) => {
         if (err) {
             res.status(500).redirect('/error');
         }
-        res.render('index', { photos: rows });
+        res.render('index', { photos: rows, isLoggedIn: req.session.isLoggedIn });
     });
 });
 
