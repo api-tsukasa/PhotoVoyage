@@ -25,6 +25,12 @@ app.get('/public/styles.css', function(req, res) {
     res.sendFile(__dirname + '/public/styles.css');
 });
 
+// error-page css
+app.get('/public/error-page.css', function(req, res) {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(__dirname + '/public/error-page.css');
+});
+
 // admin css
 app.get('/public/admin.css', function(req, res) {
     res.setHeader('Content-Type', 'text/css');
@@ -99,7 +105,7 @@ function requireLogin(req, res, next) {
         if (isAdmin(req.session.username)) {
             return next();
         } else {
-            return res.status(403).send('Unauthorized');
+            res.status(403).redirect('/error');
         }
     }
     res.redirect('/login');
@@ -111,16 +117,16 @@ app.post('/register', async (req, res) => {
 
     userDB.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
         if (err) {
-            return res.status(500).send('Failed to register user');
+            res.status(500).redirect('/error');
         }
         if (row) {
-            return res.status(400).send('Username already in use');
+            res.status(400).redirect('/error');
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
         userDB.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
             if (err) {
-                return res.status(500).send('Failed to register user');
+                res.status(500).redirect('/error');
             }
             res.redirect('/login');
         });
@@ -131,16 +137,23 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     userDB.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
-        if (err || !row) {
-            return res.status(401).send('Invalid username or password');
+        if (err) {
+            res.status(500).redirect('/error');
         }
-        const isValidPassword = await bcrypt.compare(password, row.password);
-        if (!isValidPassword) {
-            return res.status(401).send('Invalid username or password');
+        if (!row) {
+            // User not found, redirect to error page or login page with an error message
+            res.status(401).redirect('/error');
+        } else {
+            const isValidPassword = await bcrypt.compare(password, row.password);
+            if (!isValidPassword) {
+                // Invalid password, redirect to error page or login page with an error message
+                res.status(401).redirect('/error');
+            } else {
+                req.session.isLoggedIn = true;
+                req.session.username = username;
+                res.redirect('/');
+            }
         }
-        req.session.isLoggedIn = true;
-        req.session.username = username;
-        res.redirect('/');
     });
 });
 
@@ -154,18 +167,18 @@ app.get('/logout', (req, res) => {
 app.post('/upload', upload.single('photo'), (req, res) => {
     const photo = req.file;
     if (!photo) {
-        return res.status(400).send('No file uploaded');
+        res.status(400).redirect('/error');
     }
 
     db.run('INSERT INTO photos (filename) VALUES (?)', [photo.filename], (err) => {
         if (err) {
-            return res.status(500).send('Failed to upload photo');
+            res.status(500).redirect('/error');
         }
 
         // Get the information of the photo just uploaded
         db.get('SELECT * FROM photos WHERE id = ?', [this.lastID], (err, row) => {
             if (err) {
-                return res.status(500).send('Failed to fetch photo');
+                res.status(500).redirect('/error');
             }
 
             res.redirect('/');
@@ -177,7 +190,7 @@ app.post('/upload', upload.single('photo'), (req, res) => {
 app.get('/photos', (req, res) => {
     db.all('SELECT * FROM photos', (err, rows) => {
         if (err) {
-            return res.status(500).send('Failed to fetch photos');
+            res.status(500).redirect('/error');
         }
         res.json(rows);
     });
@@ -201,17 +214,22 @@ app.get('/register', (req, res) => {
 app.get('/', (req, res) => {
     db.all('SELECT * FROM photos', (err, rows) => {
         if (err) {
-            return res.status(500).send('Failed to fetch photos');
+            res.status(500).redirect('/error');
         }
         res.render('index', { photos: rows });
     });
+});
+
+// path to display the error page
+app.get('/error', (req, res) => {
+    res.render('error');
 });
 
 // Path to the administrators panel
 app.get('/admin', requireAdmin, (req, res) => {
     db.all('SELECT * FROM photos', (err, rows) => {
         if (err) {
-            return res.status(500).send('Failed to fetch photos');
+            res.status(500).redirect('/error');
         }
         res.render('admin', { photos: rows });
     });
@@ -222,7 +240,7 @@ function requireAdmin(req, res, next) {
     if (req.session.isLoggedIn && isAdmin(req.session.username)) {
         return next();
     } else {
-        return res.status(403).send('Unauthorized');
+        res.status(403).redirect('/error');
     }
 }
 
@@ -235,7 +253,7 @@ app.get('/admin/search', requireLogin, (req, res) => {
 
     db.get('SELECT * FROM photos WHERE id = ?', id, (err, row) => {
         if (err || !row) {
-            return res.status(404).send('Photo not found');
+            res.status(404).redirect('/error');
         }
         res.render('search', { photo: row });
     });
@@ -245,7 +263,7 @@ app.get('/admin/search', requireLogin, (req, res) => {
 app.get('/admin-users', requireLogin, (req, res) => {
     userDB.all('SELECT * FROM users', (err, rows) => {
         if (err) {
-            return res.status(500).send('Failed to fetch users');
+            res.status(500).redirect('/error');
         }
         res.render('admin-users', { users: rows });
     });
@@ -256,7 +274,7 @@ app.get('/admin-users/:id', requireLogin, (req, res) => {
     const userId = req.params.id;
     userDB.get('SELECT * FROM users WHERE id = ?', userId, (err, row) => {
         if (err || !row) {
-            return res.status(404).send('User not found');
+            res.status(404).redirect('/error');
         }
         res.render('user-details', { user: row, userId: userId });
     });
@@ -267,16 +285,16 @@ app.post('/admin/delete/:id', requireLogin, (req, res) => {
     const id = req.params.id;
     db.get('SELECT * FROM photos WHERE id = ?', id, (err, row) => {
         if (err || !row) {
-            return res.status(404).send('Photo not found');
+            res.status(404).redirect('/error');
         }
         const filename = row.filename;
         fs.unlink(`uploads/${filename}`, (err) => {
             if (err) {
-                return res.status(500).send('Failed to delete photo file');
+                res.status(500).redirect('/error');
             }
             db.run('DELETE FROM photos WHERE id = ?', id, (err) => {
                 if (err) {
-                    return res.status(500).send('Failed to delete photo from database');
+                    res.status(500).redirect('/error');
                 }
                 res.redirect('/admin');
             });
