@@ -151,6 +151,7 @@ app.post('/login', async (req, res) => {
             } else {
                 req.session.isLoggedIn = true;
                 req.session.username = username;
+                req.session.isAdmin = isAdmin(username); // Set isAdmin flag based on user role
                 res.redirect('/');
             }
         }
@@ -216,9 +217,13 @@ app.get('/', (req, res) => {
         if (err) {
             res.status(500).redirect('/error');
         }
-        res.render('index', { photos: rows, isLoggedIn: req.session.isLoggedIn });
+        const isLoggedIn = req.session.isLoggedIn;
+        const username = req.session.username;
+        const isAdmin = req.session.isAdmin || false; // Check if isAdmin is set in session, default to false if not set
+        res.render('index', { photos: rows, isLoggedIn: isLoggedIn, isAdmin: isAdmin });
     });
 });
+
 
 // path to display the error page
 app.get('/error', (req, res) => {
