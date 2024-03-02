@@ -11,23 +11,25 @@
     <div class="container">
         <h1>Photo Gallery</h1>
 
-        <!-- Menú -->
-        <div class="menu-toggle" id="menuToggle">
-            <!-- Ícono y contenido del menú -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
-                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-            </svg>
-            <div class="dropdown-content" id="dropdownContent">
-                <a href="/">Home</a>
-                <% if (isLoggedIn) { %>
-                    <a href="/admin">Admin Panel</a>
-                    <a href="/logout">Logout</a>
-                <% } else { %>
-                    <a href="/login">Login</a>
-                    <a href="/register">Register</a>
-                <% } %>
-            </div>
-        </div>        
+<!-- Menú -->
+<div class="menu-toggle" id="menuToggle">
+    <!-- Ícono y contenido del menú -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+    </svg>
+    <div class="dropdown-content" id="dropdownContent">
+        <a href="/">Home</a>
+        <% if (isLoggedIn) { %>
+            <% if (isAdmin) { %>
+                <a href="/admin">Admin Panel</a>
+            <% } %>
+            <a href="/logout">Logout</a>
+        <% } else { %>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        <% } %>
+    </div>
+</div>        
 
         <!-- Formulario de carga de imágenes -->
         <form action="/upload" method="post" enctype="multipart/form-data">
