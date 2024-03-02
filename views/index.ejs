@@ -11,21 +11,25 @@
     <div class="container">
         <h1>Photo Gallery</h1>
 
+        <!-- Menú -->
         <div class="menu-toggle" id="menuToggle">
-            <!-- Ícono inicial del menú -->
+            <!-- Ícono y contenido del menú -->
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
             </svg>
-            
-            <!-- Contenido del menú -->
             <div class="dropdown-content" id="dropdownContent">
                 <a href="/">Home</a>
-                <a href="/admin">Admin Panel</a>
-                <a href="/register">Register</a>
-                <a href="/login">Login</a>
+                <% if (isLoggedIn) { %>
+                    <a href="/admin">Admin Panel</a>
+                    <a href="/logout">Logout</a>
+                <% } else { %>
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                <% } %>
             </div>
         </div>        
 
+        <!-- Formulario de carga de imágenes -->
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="file" name="photo" accept="image/*">
             <button type="submit">Upload</button>
@@ -39,15 +43,11 @@
         <img class="modal-content" id="previewImage">
     </div>
     <script>
+        var menuToggle = document.getElementById("menuToggle");
 
-    var menuToggle = document.getElementById("menuToggle");
-    var menuIcon = document.getElementById("menuIcon");
-
-    // Agregar un evento de clic al botón de menú
-    menuToggle.addEventListener("click", function() {
-        // Alternar la clase 'active' en el botón de menú
-        menuToggle.classList.toggle("active");
-    });
+        menuToggle.addEventListener("click", function() {
+            menuToggle.classList.toggle("active");
+        });
 
         window.onload = () => {
             fetch('/photos')
@@ -69,7 +69,6 @@
                 .catch(error => console.error('Error fetching photos:', error));
         };
 
-        // Cerrar la ventana modal al hacer clic en el botón de cerrar
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
             document.getElementById('previewModal').style.display = 'none';
         });
