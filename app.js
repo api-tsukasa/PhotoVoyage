@@ -109,12 +109,24 @@ function requireLogin(req, res, next) {
 // Registro de usuario
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    userDB.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
+
+    // Verificar si el nombre de usuario ya está en uso
+    userDB.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
         if (err) {
             return res.status(500).send('Failed to register user');
         }
-        res.redirect('/login');
+        if (row) {
+            return res.status(400).send('Username already in use');
+        }
+
+        // Hash de la contraseña y registro del usuario
+        const hashedPassword = await bcrypt.hash(password, 10);
+        userDB.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
+            if (err) {
+                return res.status(500).send('Failed to register user');
+            }
+            res.redirect('/login');
+        });
     });
 });
 
