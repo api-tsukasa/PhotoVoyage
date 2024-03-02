@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Página no encontrada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/public/error-page.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1 id="error-code">ERROR</h1>
+            <p id="error-text">Oops! there seems to be an error</p>
+            <a href="/" class="btn">Back to home page</a>
+            <div id="tooltip" class="tooltip">Oops! here are the types of possible errors
+                <h4>1) Image not selected</h4>
+                <h4>2) invalid image format</h4>
+                <h4>3) you do not have permission to go to this page</h4>
+                <h4>4) Invalid username or password</h4>
+                <h4>5) Username already in use</h4>
+                <h4>6) Connection error</h4>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <script>
+    // Esta parte es opcional, solo si quieres que la animación se reproduzca cuando se cargue la página
+        window.addEventListener('load', () => {
+            const text = document.getElementById('error-text');
+            text.style.animation = 'none'; // Se detiene la animación
+            text.offsetHeight; // Se fuerza un reflow
+            text.style.animation = 'typing 3s steps(40, end)'; // Se reinicia la animación
+        });
+        
+        const tooltip = document.getElementById('tooltip');
+        const errorCode = document.getElementById('error-code');
+        
+        errorCode.addEventListener('mouseover', () => {
+            tooltip.style.display = 'block';
+        });
+        
+        errorCode.addEventListener('mouseout', () => {
+            tooltip.style.display = 'none';
+        });
+        </script>
+</body>
+</html>
