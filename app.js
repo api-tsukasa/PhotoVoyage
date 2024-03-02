@@ -8,9 +8,18 @@ const { parseString } = require('xml2js');
 const { createCanvas } = require('canvas');
 const canvas = createCanvas(200, 50);
 const ctx = canvas.getContext('2d');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3000;
+app.use(cookieParser());
+
+app.use(session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 } // 2 day expiration
+}));
 
 function generateCaptcha() {
     const operators = ['+', '-', '*'];
@@ -125,8 +134,8 @@ function isAdmin(username) {
 
 // Protect routes that require login
 function requireLogin(req, res, next) {
-    if (req.session.isLoggedIn) {
-        if (isAdmin(req.session.username)) {
+    if (req.cookies.loggedInUser) {
+        if (isAdmin(req.cookies.loggedInUser)) {
             return next();
         } else {
             res.status(403).redirect('/error');
@@ -163,8 +172,10 @@ app.post('/register', async (req, res) => {
     });
 });
 
-// Login
+// login
 app.post('/login', async (req, res) => {
+    const twoDaysInMilliseconds = 2 * 24 * 60 * 60 * 1000;
+    const expirationDate = new Date(Date.now() + twoDaysInMilliseconds);
     const { username, password } = req.body;
     userDB.get('SELECT * FROM users WHERE username = ?', [username], async (err, row) => {
         if (err) {
@@ -179,6 +190,8 @@ app.post('/login', async (req, res) => {
                 // Invalid password, redirect to error page or login page with an error message
                 res.status(401).redirect('/error');
             } else {
+                // Set a cookie named 'loggedInUser' with the username
+                res.cookie('loggedInUser', username, { expires: expirationDate, httpOnly: true })
                 req.session.isLoggedIn = true;
                 req.session.username = username;
                 req.session.isAdmin = isAdmin(username); // Set isAdmin flag based on user role
