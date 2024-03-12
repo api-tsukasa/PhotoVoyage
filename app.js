@@ -9,6 +9,7 @@ const { createCanvas } = require('canvas');
 const canvas = createCanvas(200, 50);
 const ctx = canvas.getContext('2d');
 const cookieParser = require('cookie-parser');
+const generateCaptcha = require('./captchaS');
 
 const app = express();
 const port = 3000;
@@ -20,27 +21,6 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 } // 2 day expiration
 }));
-
-function generateCaptcha() {
-    const operators = ['+', '-', '*'];
-    const num1 = Math.floor(Math.random() * 10);
-    const num2 = Math.floor(Math.random() * 10);
-    const operator = operators[Math.floor(Math.random() * operators.length)];
-    const question = `${num1} ${operator} ${num2}`;
-    let answer;
-    switch (operator) {
-        case '+':
-            answer = num1 + num2;
-            break;
-        case '-':
-            answer = num1 - num2;
-            break;
-        case '*':
-            answer = num1 * num2;
-            break;
-    }
-    return { question: question, answer: answer };
-}
 
 // Multer configuration for uploading files
 const upload = multer({ dest: 'uploads/' });
