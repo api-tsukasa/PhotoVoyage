@@ -1,16 +1,13 @@
 const express = require('express');
 const multer = require('multer');
-const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const { parseString } = require('xml2js');
-const { createCanvas } = require('canvas');
-const canvas = createCanvas(200, 50);
-const ctx = canvas.getContext('2d');
 const cookieParser = require('cookie-parser');
 
 const generateCaptcha = require('./services/captchaS');
+const { db, userDB } = require('./services/database');
 
 const app = express();
 const port = 3000;
@@ -71,18 +68,6 @@ app.get('/public/user-details.css', function(req, res) {
 
 // Configure Express to serve static files from the "uploads" folder
 app.use('/uploads', express.static('uploads'));
-
-// SQLite database configuration
-const db = new sqlite3.Database('photos.db');
-db.serialize(() => {
-    db.run('CREATE TABLE IF NOT EXISTS photos (id INTEGER PRIMARY KEY, filename TEXT)');
-});
-
-// SQLite database configuration for users
-const userDB = new sqlite3.Database('users.db');
-userDB.serialize(() => {
-    userDB.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)');
-});
 
 // Middleware configuration for sessions
 app.use(session({
