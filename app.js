@@ -9,7 +9,8 @@ const { createCanvas } = require('canvas');
 const canvas = createCanvas(200, 50);
 const ctx = canvas.getContext('2d');
 const cookieParser = require('cookie-parser');
-const generateCaptcha = require('./captchaS');
+
+const generateCaptcha = require('./services/captchaS');
 
 const app = express();
 const port = 3000;
