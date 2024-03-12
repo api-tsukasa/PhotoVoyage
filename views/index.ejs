@@ -11,25 +11,25 @@
     <div class="container">
         <h1>Photo Gallery</h1>
 
-<!-- Menú -->
-<div class="menu-toggle" id="menuToggle">
-    <!-- Ícono y contenido del menú -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
-        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-    </svg>
-    <div class="dropdown-content" id="dropdownContent">
-        <a href="/">Home</a>
-        <% if (isLoggedIn) { %>
-            <% if (isAdmin) { %>
-                <a href="/admin">Admin Panel</a>
-            <% } %>
-            <a href="/logout">Logout</a>
-        <% } else { %>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        <% } %>
-    </div>
-</div>        
+        <!-- Menú -->
+        <div class="menu-toggle" id="menuToggle">
+            <!-- Ícono y contenido del menú -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+            </svg>
+            <div class="dropdown-content" id="dropdownContent">
+                <a href="/">Home</a>
+                <% if (isLoggedIn) { %>
+                    <% if (isAdmin) { %>
+                        <a href="/admin">Admin Panel</a>
+                    <% } %>
+                    <a href="/logout">Logout</a>
+                <% } else { %>
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                <% } %>
+            </div>
+        </div>        
 
         <!-- Formulario de carga de imágenes -->
         <form action="/upload" method="post" enctype="multipart/form-data">
@@ -46,70 +46,69 @@
     </div>
     <script>
         var menuToggle = document.getElementById("menuToggle");
-
+        
         menuToggle.addEventListener("click", function() {
             menuToggle.classList.toggle("active");
         });
+
         window.onload = () => {
-    fetch('/photos')
-        .then(response => response.json())
-        .then(data => {
-            const gallery = document.getElementById('gallery');
-            data.forEach(photo => {
-                const imgContainer = document.createElement('div');
-                imgContainer.classList.add('image-container');
+            fetch('/photos')
+                .then(response => response.json())
+                .then(data => {
+                    const gallery = document.getElementById('gallery');
+                    data.forEach(photo => {
+                        const imgContainer = document.createElement('div');
+                        imgContainer.classList.add('image-container');
 
-                const img = document.createElement('img');
-                const filename = photo.filename.toLowerCase();
-                const staticSrc = `/uploads/${filename.split('.')[0]}.gif`;
+                        const img = document.createElement('img');
+                        const filename = photo.filename.toLowerCase();
+                        const staticSrc = `/uploads/${filename.split('.')[0]}.gif`;
 
-                if (filename.endsWith('.gif')) {
-                    img.src = staticSrc;
-                    img.dataset.src = `/uploads/${filename}`;
-                    img.loading = 'lazy'; // Lazy loading
-                } else {
-                    img.src = `/uploads/${filename}`;
-                }
+                        if (filename.endsWith('.gif')) {
+                            img.src = staticSrc;
+                            img.dataset.src = `/uploads/${filename}`;
+                            img.loading = 'lazy'; // Lazy loading
+                        } else {
+                            img.src = `/uploads/${filename}`;
+                        }
 
-                img.addEventListener('click', function() {
-                    const modal = document.getElementById('previewModal');
-                    const modalImg = document.getElementById('previewImage');
-                    modal.style.display = 'block';
-                    modalImg.src = this.src;
-                });
+                        img.addEventListener('click', function() {
+                            const modal = document.getElementById('previewModal');
+                            const modalImg = document.getElementById('previewImage');
+                            modal.style.display = 'block';
+                            modalImg.src = this.src;
+                        });
 
-                const shareBtn = document.createElement('button');
-shareBtn.innerText = 'Compartir';
-shareBtn.classList.add('share-btn');
-shareBtn.addEventListener('click', function() {
-    if (navigator.share) {
-        const imageUrl = window.location.origin + '/uploads/' + filename;
-        const shareData = {
-            title: 'PhotoVoyage',
-            text: 'Look at this image on PhotoVoyage',
-            url: imageUrl,
+                        const shareBtn = document.createElement('button');
+                        shareBtn.innerText = 'Compartir';
+                        shareBtn.classList.add('share-btn');
+                        shareBtn.addEventListener('click', function() {
+                            if (navigator.share) {
+                                const imageUrl = window.location.origin + '/uploads/' + filename;
+                                const shareData = {
+                                    title: 'PhotoVoyage',
+                                    text: 'Look at this image on PhotoVoyage',
+                                    url: imageUrl,
+                                };
+                                navigator.share(shareData)
+                                    .then(() => console.log('Successfully shared content'))
+                                    .catch((error) => console.error('Error when sharing:', error));
+                            } else {
+                                console.error('The Web Share API is not supported in this browser.');
+                            }
+                        });
+
+                        imgContainer.appendChild(img);
+                        imgContainer.appendChild(shareBtn);
+                        gallery.appendChild(imgContainer);
+                    });
+                })
+                .catch(error => console.error('Error fetching photos:', error));
         };
-        navigator.share(shareData)
-            .then(() => console.log('Successfully shared content'))
-            .catch((error) => console.error('Error when sharing:', error));
-    } else {
-        console.error('The Web Share API is not supported in this browser.');
-    }
-});
 
-
-                imgContainer.appendChild(img);
-                imgContainer.appendChild(shareBtn);
-                gallery.appendChild(imgContainer);
-            });
-        })
-        .catch(error => console.error('Error fetching photos:', error));
-};
-
-document.getElementsByClassName('close')[0].addEventListener('click', function() {
-    document.getElementById('previewModal').style.display = 'none';
-});
-
+        document.getElementsByClassName('close')[0].addEventListener('click', function() {
+            document.getElementById('previewModal').style.display = 'none';
+        });
     </script>
 </body>
 </html>
