@@ -80,19 +80,20 @@
 
                 const shareBtn = document.createElement('button');
 shareBtn.innerText = 'Compartir';
+shareBtn.classList.add('share-btn');
 shareBtn.addEventListener('click', function() {
     if (navigator.share) {
         const imageUrl = window.location.origin + '/uploads/' + filename;
         const shareData = {
             title: 'PhotoVoyage',
-            text: 'Mira esta imagen en PhotoVoyage',
+            text: 'Look at this image on PhotoVoyage',
             url: imageUrl,
         };
         navigator.share(shareData)
-            .then(() => console.log('Contenido compartido exitosamente'))
-            .catch((error) => console.error('Error al compartir:', error));
+            .then(() => console.log('Successfully shared content'))
+            .catch((error) => console.error('Error when sharing:', error));
     } else {
-        console.error('La API de Web Share no está soportada en este navegador');
+        console.error('The Web Share API is not supported in this browser.');
     }
 });
 
