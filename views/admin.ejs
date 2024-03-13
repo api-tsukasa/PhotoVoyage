@@ -39,7 +39,8 @@
                             <p>File Name: <%= photo.filename %></p>
                             <p>ID: <%= photo.id %></p>
                             <p>Database: photos.db</p>
-                            <form action="/admin/delete/<%= photo.id %>" method="post">
+                            <!-- Añadir confirmación antes de eliminar -->
+                            <form action="/admin/delete/<%= photo.id %>" method="post" onsubmit="return confirm('Are you sure you want to delete this photo? This action cannot be undone.');">
                                 <button type="submit">Delete</button>
                             </form>
                         </li>
