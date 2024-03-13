@@ -50,7 +50,7 @@
         menuToggle.addEventListener("click", function() {
             menuToggle.classList.toggle("active");
         });
-
+    
         window.onload = () => {
             fetch('/photos')
                 .then(response => response.json())
@@ -59,11 +59,11 @@
                     data.forEach(photo => {
                         const imgContainer = document.createElement('div');
                         imgContainer.classList.add('image-container');
-
+    
                         const img = document.createElement('img');
                         const filename = photo.filename.toLowerCase();
                         const staticSrc = `/uploads/${filename.split('.')[0]}.gif`;
-
+    
                         if (filename.endsWith('.gif')) {
                             img.src = staticSrc;
                             img.dataset.src = `/uploads/${filename}`;
@@ -71,14 +71,16 @@
                         } else {
                             img.src = `/uploads/${filename}`;
                         }
-
+    
                         img.addEventListener('click', function() {
                             const modal = document.getElementById('previewModal');
                             const modalImg = document.getElementById('previewImage');
                             modal.style.display = 'block';
-                            modalImg.src = this.src;
+    
+                            // Set the source of the modal image to the original image
+                            modalImg.src = img.dataset.src || img.src;
                         });
-
+    
                         const shareBtn = document.createElement('button');
                         shareBtn.innerText = 'Compartir';
                         shareBtn.classList.add('share-btn');
@@ -97,7 +99,7 @@
                                 console.error('The Web Share API is not supported in this browser.');
                             }
                         });
-
+    
                         imgContainer.appendChild(img);
                         imgContainer.appendChild(shareBtn);
                         gallery.appendChild(imgContainer);
@@ -105,10 +107,10 @@
                 })
                 .catch(error => console.error('Error fetching photos:', error));
         };
-
+    
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
             document.getElementById('previewModal').style.display = 'none';
         });
-    </script>
+    </script>    
 </body>
 </html>
