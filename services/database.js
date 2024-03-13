@@ -9,7 +9,7 @@ db.serialize(() => {
 // SQLite database configuration for users
 const userDB = new sqlite3.Database('users.db');
 userDB.serialize(() => {
-    userDB.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)');
+    userDB.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)');
 });
 
 module.exports = { db, userDB };
