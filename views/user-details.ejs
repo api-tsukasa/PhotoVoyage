@@ -13,15 +13,15 @@
         <div class="details-container">
             <p><strong>Username:</strong> <span id="username"><%= user.username %></span></p>
             <p><strong>Account ID:</strong> <%= userId %></p>
-            <p><strong>Unique name:</strong> Yes</p>
-            <!-- Agregar más detalles del usuario según sea necesario -->
+            <p><strong>Account Created At:</strong> <%= user.created_at %></p>
+            <!-- Add more user details here as needed -->
         </div>
         <button class="btn-back" onclick="goToAdminPanel()">Back to Admin Panel</button>
     </div>
 
     <script>
         function goToAdminPanel() {
-            window.location.href = "/admin-users"; // Cambiar "/admin-panel" por la URL real de tu panel de administración
+            window.location.href = "/admin-users";
         }
     </script>
 </body>
