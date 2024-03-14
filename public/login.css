@@ -76,6 +76,30 @@ button:hover {
     animation: slideIn 0.5s ease-in-out;
 }
 
+.security-tip {
+    color: #555;
+    font-size: 12px;
+}
+
+.security-tips {
+    margin-top: 20px;
+}
+
+.security-tips h3 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.security-tips ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.security-tips ul li {
+    margin-bottom: 5px;
+}
+
 @keyframes slideIn {
     from {
         opacity: 0;
