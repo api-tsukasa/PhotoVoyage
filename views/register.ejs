@@ -10,7 +10,7 @@
     <div class="container">
         <h2>Register</h2>
         <% if (message) { %>
-            <p><%= message %></p>
+            <p class="message"><%= message %></p>
         <% } %>
         <form action="/register" method="POST">
             <div class="form-group">
@@ -20,6 +20,7 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
+                <small class="security-tip">Tip: Use a strong password with a mix of letters, numbers, and symbols.</small>
             </div>
             <div class="form-group">
                 <label for="captcha">Solve the following</label>
@@ -29,6 +30,29 @@
             </div>
             <button type="submit">Register</button>
         </form>
+        <div class="security-tips">
+            <h3>Security Tips:</h3>
+            <p id="random-tip"></p>
+        </div>
     </div>
+    <script>
+        var securityTips = [
+            "Use a unique password for your account",
+            "Do not pass your account information to anyone.",
+            "Do not use a very common password",
+            "Update your password regularly.",
+            "Beware of phishing attempts and never click on suspicious links."
+        ];
+
+        function getRandomTip() {
+            var randomIndex = Math.floor(Math.random() * securityTips.length);
+            return securityTips[randomIndex];
+        }
+
+        window.onload = function() {
+            var tipElement = document.getElementById("random-tip");
+            tipElement.textContent = getRandomTip();
+        };
+    </script>
 </body>
 </html>
