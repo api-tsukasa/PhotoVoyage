@@ -11,9 +11,18 @@
     <div class="user-details">
         <h1>User Details</h1>
         <div class="details-container">
-            <p><strong>Username:</strong> <span id="username"><%= user.username %></span></p>
-            <p><strong>Account ID:</strong> <%= userId %></p>
-            <p><strong>Account Created At:</strong> <%= user.created_at %></p>
+            <div class="detail-item">
+                <span class="detail-label">Username:</span>
+                <span class="detail-value"><%= user.username %></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Account ID:</span>
+                <span class="detail-value"><%= userId %></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Account Created At:</span>
+                <span class="detail-value"><%= user.created_at %></span>
+            </div>
             <!-- Add more user details here as needed -->
         </div>
         <button class="btn-back" onclick="goToAdminPanel()">Back to Admin Panel</button>
