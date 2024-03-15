@@ -49,12 +49,12 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border-color: #ff4d4d;
+    border-color: #ed5c53;
 }
 
 button {
     padding: 12px 0;
-    background-color: #ff4d4d;
+    background-color: #ed5c53;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -71,9 +71,66 @@ button:hover {
 
 .message {
     text-align: center;
-    color: #ff6347;
+    color: #ff7c70;
     margin-top: 16px;
     animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Menu Toggle */
+.menu-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+/* Dropdown Styles */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    animation: slideDown 0.5s ease forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.menu-toggle.active .dropdown-content {
+    display: block;
 }
 
 .security-tip {
@@ -98,15 +155,4 @@ button:hover {
 
 .security-tips ul li {
     margin-bottom: 5px;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
