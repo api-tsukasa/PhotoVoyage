@@ -1,50 +1,59 @@
-/* user-details.css */
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
 }
 
 .user-details {
-    background-color: #fff;
-    max-width: 400px;
+    background-color: #ffffff;
+    max-width: 800px;
     margin: 50px auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: box-shadow 0.3s ease;
 }
 
 h1 {
-    color: #333;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .details-container {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
-p {
-    color: #666;
-    font-size: 16px;
+.detail-item {
+    margin-bottom: 20px;
 }
 
-#username {
+.detail-label {
     font-weight: bold;
-    color: #333;
+    color: #555555;
+}
+
+.detail-value {
+    margin-left: 10px;
+    color: #777777;
 }
 
 .btn-back {
-    background-color: #ccc;
-    color: #333;
+    background-color: #ed5c53;
+    color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 12px 24px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s ease;
 }
 
 .btn-back:hover {
-    background-color: #ddd;
+    background-color: #ff7c70;
 }
