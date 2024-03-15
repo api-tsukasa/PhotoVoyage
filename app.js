@@ -20,6 +20,7 @@ app.use(session({
     cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 } // 2 day expiration
 }));
 
+
 // Multer configuration for uploading files
 const upload = multer({ dest: 'uploads/' });
 
@@ -276,7 +277,7 @@ app.get('/admin/search', requireLogin, (req, res) => {
 });
 
 // Path to display the user administration page
-app.get('/admin-users', requireLogin, (req, res) => {
+app.get('/admin-users', requireAdmin, (req, res) => {
     userDB.all('SELECT * FROM users', (err, rows) => {
         if (err) {
             res.status(500).redirect('/error');
@@ -286,7 +287,7 @@ app.get('/admin-users', requireLogin, (req, res) => {
 });
 
 // Path to get a user's information by ID and display it on a separate page
-app.get('/admin-users/:id', requireLogin, (req, res) => {
+app.get('/admin-users/:id', requireAdmin, (req, res) => {
     const userId = req.params.id;
     userDB.get('SELECT * FROM users WHERE id = ?', userId, (err, row) => {
         if (err || !row) {
@@ -297,7 +298,7 @@ app.get('/admin-users/:id', requireLogin, (req, res) => {
 });
 
 // Path to delete a photo
-app.post('/admin/delete/:id', requireLogin, (req, res) => {
+app.post('/admin/delete/:id', requireAdmin, (req, res) => {
     const id = req.params.id;
     db.get('SELECT * FROM photos WHERE id = ?', id, (err, row) => {
         if (err || !row) {
