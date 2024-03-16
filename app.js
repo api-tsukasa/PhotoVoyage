@@ -3,11 +3,11 @@ const multer = require('multer');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const { parseString } = require('xml2js');
 const cookieParser = require('cookie-parser');
 
 const generateCaptcha = require('./services/captchaS');
 const { db, userDB } = require('./services/database');
+const { isAdmin } = require('./tools/adminUtils');
 
 const app = express();
 const port = 3000;
@@ -76,28 +76,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-
-// Función para verificar si el usuario es un administrador
-function isAdmin(username) {
-    const xmlData = fs.readFileSync('private/admins.xml', 'utf8'); // Change the path to 'private/admins.xml'
-    let isAdmin = false;
-
-    parseString(xmlData, (err, result) => {
-        if (err) {
-            console.error('Failed to parse XML file');
-            return;
-        }
-        const admins = result.admins.admin;
-        for (let i = 0; i < admins.length; i++) {
-            if (admins[i] === username) {
-                isAdmin = true;
-                break;
-            }
-        }
-    });
-
-    return isAdmin;
-}
 
 // Protect routes that require login
 function requireLogin(req, res, next) {
