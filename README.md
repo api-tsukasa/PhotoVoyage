@@ -22,6 +22,31 @@ this step is very important for the bot to work that's why you need `git` this s
 > npm install
 ```
 
+## Start Project
+```cmd
+> npm run dev
+```
+
+When you start the server locally, you have to enter the following URL
+
+* http://localhost:3000/ - home page
+* http://localhost:3000/admin - Admin Panel
+
+## admins.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<admins>
+    <admin>XFkjjp0</admin>
+</admins>
+```
+
+The first account with an administrator is called `XFkjjp0` but it can be modified until you can add more accounts if you like with the following tag
+
+```xml
+    <admin>account name</admin>
+```
+
 ## Features
 
 * Database Photo Storage
