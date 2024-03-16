@@ -4,41 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery - Register</title>
-    <link rel="stylesheet" href="/public/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .custom-button {
+            background-color: #f05c54; /* Cambia el color de fondo del botón a #f05c54 */
+            padding: 12px 24px; /* Ajusta el relleno del botón para hacerlo más grande */
+            font-size: 1.25rem; /* Ajusta el tamaño del texto del botón */
+            font-weight: bold; /* Hace que el texto del botón sea negrita */
+        }
+
+        .custom-button:hover {
+            background-color: #FF8C66; /* Cambia el color de fondo cuando el mouse está encima del botón */
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Register</h2>
-        <% if (message) { %>
-            <p class="message"><%= message %></p>
-        <% } %>
-        <form action="/register" method="POST">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+    <section class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <div class="box">
+                        <h2 class="title is-2 has-text-centered">Register</h2>
+                        <% if (message) { %>
+                            <p class="notification is-info"><%= message %></p>
+                        <% } %>
+                        <form action="/register" method="POST">
+                            <div class="field">
+                                <label class="label" for="username">Username</label>
+                                <div class="control">
+                                    <input class="input" type="text" id="username" name="username" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label" for="password">Password</label>
+                                <div class="control">
+                                    <input class="input" type="password" id="password" name="password" required>
+                                </div>
+                                <p class="help">Tip: Use a strong password with a mix of letters, numbers, and symbols.</p>
+                            </div>
+                            <div class="field">
+                                <label class="label" for="captcha">Solve the following</label>
+                                <p><%= captcha.question %></p>
+                                <input type="hidden" name="answer" value="<%= captcha.answer %>">
+                                <div class="control">
+                                    <input class="input" type="text" id="captcha" name="captcha" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-primary is-fullwidth custom-button" type="submit">Register</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="box">
+                        <h3 class="title is-3 has-text-centered">Security Tips:</h3>
+                        <p id="random-tip" class="has-text-centered"></p>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-                <small class="security-tip">Tip: Use a strong password with a mix of letters, numbers, and symbols.</small>
-            </div>
-            <div class="form-group">
-                <label for="captcha">Solve the following</label>
-                <p><%= captcha.question %></p>
-                <input type="hidden" name="answer" value="<%= captcha.answer %>">
-                <input type="text" id="captcha" name="captcha" required>
-            </div>
-            <button type="submit">Register</button>
-        </form>
-        <div class="security-tips">
-            <h3>Security Tips:</h3>
-            <p id="random-tip"></p>
         </div>
-    </div>
+    </section>
     <script>
         var securityTips = [
             "Use a unique password for your account",
