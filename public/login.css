@@ -49,12 +49,12 @@ input[type="password"] {
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-    border-color: #ed5c53;
+    border-color: #00d1b2;
 }
 
 button {
     padding: 12px 0;
-    background-color: #ed5c53;
+    background-color: #00d1b2;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -65,7 +65,7 @@ button {
 }
 
 button:hover {
-    background-color: #e44747;
+    background-color: #00d1b2;
     transform: scale(1.05);
 }
 
