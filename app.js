@@ -91,7 +91,7 @@ function requireLogin(req, res, next) {
 
 // user register
 app.post('/register', async (req, res) => {
-    const { username, password, captcha, answer } = req.body;
+    const { username, email, password, captcha, answer } = req.body;
     const actualAnswer = req.session.captcha;
 
     if (parseInt(captcha) !== actualAnswer) {
@@ -108,7 +108,7 @@ app.post('/register', async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        userDB.run('INSERT INTO users (username, password) VALUES (?, ?)', [username, hashedPassword], (err) => {
+        userDB.run('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hashedPassword], (err) => {
             if (err) {
                 res.status(500).redirect('/error');
             }
