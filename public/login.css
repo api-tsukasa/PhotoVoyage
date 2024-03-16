@@ -39,6 +39,7 @@ label {
 }
 
 input[type="text"],
+input[type="email"],
 input[type="password"] {
     padding: 12px;
     border: 1px solid #ccc;
@@ -48,6 +49,7 @@ input[type="password"] {
 }
 
 input[type="text"]:focus,
+input[type="email"]:focus,
 input[type="password"]:focus {
     border-color: #00d1b2;
 }
