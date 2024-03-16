@@ -29,10 +29,17 @@
                             <p class="notification is-info"><%= message %></p>
                         <% } %>
                         <form action="/register" method="POST">
+
                             <div class="field">
                                 <label class="label" for="username">Username</label>
                                 <div class="control">
                                     <input class="input" type="text" id="username" name="username" required>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="label" for="email">Email</label>
+                                <div class="control">
+                                    <input class="input" type="text" id="email" name="email" required>
                                 </div>
                             </div>
                             <div class="field">
