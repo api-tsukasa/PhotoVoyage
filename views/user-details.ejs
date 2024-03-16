@@ -16,13 +16,17 @@
                 <span class="detail-value"><%= user.username %></span>
             </div>
             <div class="detail-item">
+                <span class="detail-label">Email:</span>
+                <span class="detail-value"><%= user.email %></span>
+            </div>
+            <div class="detail-item">
                 <span class="detail-label">Account ID:</span>
                 <span class="detail-value"><%= userId %></span>
             </div>
             <div class="detail-item">
                 <span class="detail-label">Account Created At:</span>
                 <span class="detail-value"><%= user.created_at %></span>
-            </div>
+            </div>          
             <!-- Add more user details here as needed -->
         </div>
         <button class="btn-back" onclick="goToAdminPanel()">Back to Admin Panel</button>
