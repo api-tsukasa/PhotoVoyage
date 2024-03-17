@@ -158,17 +158,21 @@ app.post('/upload', upload.single('photo'), (req, res) => {
 
     if (!photo || !photoName) { // Verificar si la imagen y el nombre están presentes
         res.status(400).redirect('/error');
-    }
-
-    // Insertar la información de la foto en la base de datos
-    db.run('INSERT INTO photos (filename, name) VALUES (?, ?)', [photo.filename, photoName], (err) => {
-        if (err) {
-            res.status(500).redirect('/error');
+    } else {
+        // Insertar la información de la foto en la base de datos
+        if (photo.filename) {
+            db.run('INSERT INTO photos (filename, name) VALUES (?, ?)', [photo.filename, photoName], (err) => {
+                if (err) {
+                    res.status(500).redirect('/error');
+                } else {
+                    // Redirigir a la página principal después de la carga exitosa
+                    res.redirect('/');
+                }
+            });
+        } else {
+            res.status(400).redirect('/error'); // Handle the case where photo.filename is undefined
         }
-
-        // Redirigir a la página principal después de la carga exitosa
-        res.redirect('/');
-    });
+    }
 });
 
 // Path to get the list of photos
