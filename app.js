@@ -20,7 +20,6 @@ app.use(session({
     cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 } // 2 day expiration
 }));
 
-
 // Multer configuration for uploading files
 const upload = multer({ dest: 'uploads/' });
 
@@ -155,23 +154,20 @@ app.get('/logout', (req, res) => {
 // Route to upload photos
 app.post('/upload', upload.single('photo'), (req, res) => {
     const photo = req.file;
-    if (!photo) {
+    const photoName = req.body.photoName; // Obtener el nombre de la imagen del cuerpo de la solicitud
+
+    if (!photo || !photoName) { // Verificar si la imagen y el nombre están presentes
         res.status(400).redirect('/error');
     }
 
-    db.run('INSERT INTO photos (filename) VALUES (?)', [photo.filename], (err) => {
+    // Insertar la información de la foto en la base de datos
+    db.run('INSERT INTO photos (filename, name) VALUES (?, ?)', [photo.filename, photoName], (err) => {
         if (err) {
             res.status(500).redirect('/error');
         }
 
-        // Get the information of the photo just uploaded
-        db.get('SELECT * FROM photos WHERE id = ?', [this.lastID], (err, row) => {
-            if (err) {
-                res.status(500).redirect('/error');
-            }
-
-            res.redirect('/');
-        });
+        // Redirigir a la página principal después de la carga exitosa
+        res.redirect('/');
     });
 });
 
