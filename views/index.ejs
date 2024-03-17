@@ -9,10 +9,10 @@
     <!-- Include Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
-        /* Add any custom CSS here */
-        /* Override any Bulma styles here */
+        /* Custom CSS */
         body {
-            background-color: white; /* Fondo blanco para toda la página */
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
         }
         
         .menu-toggle {
@@ -39,94 +39,31 @@
         }
     
         .uploaded-img-container {
-            margin-top: 20px;
-        }
-    
-        .gallery {
-            margin-top: 20px;
+            margin-top: 5px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
         }
     
         .image-container {
-            margin: 10px;
+            margin: 5px;
             position: relative;
             cursor: pointer;
-            max-width: 320px;
+            max-width: 220px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+    
+        .image-container:hover {
+            transform: translateY(-5px);
         }
     
         .image-container img {
-            max-width: 400px;
+            max-width: 200px;
             height: 250px;
-        }
-    
-        .share-btn {
-            position: absolute;
-            top: calc(100% + 5px);
-            right: 10px;
-            background-color: #00d1b2; /* Color de fondo del botón */
-            border: none;
-            cursor: pointer;
-            padding: 6px 12px;
-            border-radius: 5px;
-            color: white; /* Color de texto del botón */
-            transition: background-color 0.3s ease;
-        }
-    
-        .share-btn:hover {
-            background-color: #00b89c; /* Cambio de color al pasar el mouse */
-        }
-    
-        .image-container:hover .share-btn {
-            position: absolute;
-            top: calc(100% + 5px);
-            right: 10px;
-        }
-    
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 100px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.9);
-        }
-    
-        .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 80%;
-            max-height: 80%;
-        }
-    
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-    
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    
-        .upload-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            border-radius: 10px 10px 0 0;
         }
     </style>    
 </head>
@@ -134,10 +71,10 @@
     <div class="container">
         <h1 class="title">Photo Gallery</h1>
 
-        <!-- Menú -->
+        <!-- Menu -->
         <div class="menu-toggle" id="menuToggle">
-            <!-- Ícono y contenido del menú -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
+            <!-- Icon and menu content -->
+            <svg xmlns="svgs/" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
             </svg>
             <div class="dropdown-content" id="dropdownContent">
@@ -154,19 +91,19 @@
             </div>
         </div>        
 
-        <!-- Formulario de carga de imágenes -->
+        <!-- Image upload form -->
         <div class="upload-button">
             <form action="/upload" method="post" enctype="multipart/form-data" id="uploadForm">
                 <div class="control">
                     <button type="button" class="button is-primary" id="uploadBtn">Upload Photo</button>
+                    <input type="hidden" name="photoName" id="photoName">
                     <input class="file-input" type="file" name="photo" accept="image/*" style="display: none;">
                 </div>
             </form>
         </div>
-        <div class="uploaded-img-container" id="uploadedImgContainer"></div>
-        <div class="gallery" id="gallery"></div>
+        <div class="uploaded-img-container" id="gallery"></div>
     </div>
-    <!-- Ventana modal para vista previa -->
+    <!-- Modal window for preview -->
     <div id="previewModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="previewImage">
@@ -180,8 +117,14 @@
         
         // Event listener for the Upload button
         document.getElementById("uploadBtn").addEventListener("click", function() {
-            // Trigger click event on the hidden file input
-            document.querySelector('.file-input').click();
+            // Ask for the image name
+            var imageName = prompt("Please enter the name of the image:");
+            if (imageName) {
+                // Store the image name in the input field
+                document.getElementById('photoName').value = imageName;
+                // Click on the file input
+                document.querySelector('.file-input').click();
+            }
         });
 
         // Event listener for file input change
@@ -190,6 +133,28 @@
             var form = document.getElementById('uploadForm');
             // Submit the form
             form.submit();
+            
+            // Fetch the photo name and send it to the server
+            var photoName = document.getElementById('photoName').value;
+            var formData = new FormData();
+            formData.append('photoName', photoName);
+            
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Photo uploaded successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error uploading photo:', error);
+            });
         });
 
         window.onload = () => {
@@ -200,11 +165,11 @@
                     data.forEach(photo => {
                         const imgContainer = document.createElement('div');
                         imgContainer.classList.add('image-container');
-    
+
                         const img = document.createElement('img');
                         const filename = photo.filename.toLowerCase();
                         const staticSrc = `/uploads/${filename.split('.')[0]}.gif`;
-    
+
                         if (filename.endsWith('.gif')) {
                             img.src = staticSrc;
                             img.dataset.src = `/uploads/${filename}`;
@@ -212,43 +177,27 @@
                         } else {
                             img.src = `/uploads/${filename}`;
                         }
-    
+
                         img.addEventListener('click', function() {
                             const modal = document.getElementById('previewModal');
                             const modalImg = document.getElementById('previewImage');
                             modal.style.display = 'block';
-    
+
                             // Set the source of the modal image to the original image
                             modalImg.src = img.dataset.src || img.src;
                         });
-    
-                        const shareBtn = document.createElement('button');
-                        shareBtn.innerText = 'Compartir';
-                        shareBtn.classList.add('share-btn');
-                        shareBtn.addEventListener('click', function() {
-                            if (navigator.share) {
-                                const imageUrl = window.location.origin + '/uploads/' + filename;
-                                const shareData = {
-                                    title: 'PhotoVoyage',
-                                    text: 'Look at this image on PhotoVoyage',
-                                    url: imageUrl,
-                                };
-                                navigator.share(shareData)
-                                    .then(() => console.log('Successfully shared content'))
-                                    .catch((error) => console.error('Error when sharing:', error));
-                            } else {
-                                console.error('The Web Share API is not supported in this browser.');
-                            }
-                        });
-    
+
+                        const imageName = document.createElement('div');
+                        imageName.textContent = photo.name ? photo.name : 'Unknown';
+
                         imgContainer.appendChild(img);
-                        imgContainer.appendChild(shareBtn);
+                        imgContainer.appendChild(imageName); // Add the image name
                         gallery.appendChild(imgContainer);
                     });
                 })
                 .catch(error => console.error('Error fetching photos:', error));
         };
-    
+
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
             document.getElementById('previewModal').style.display = 'none';
         });
