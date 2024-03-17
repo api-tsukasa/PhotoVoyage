@@ -157,20 +157,3 @@ h1 {
     color: #bbb; /* Change text color on hover */
     text-decoration: none; /* Remove underline on hover */
 }
-
-/* Share button styles */
-.share-btn {
-    background-color: #ed5c53; /* Set background color */
-    color: white; /* Set text color */
-    padding: 5px 10px; /* Add padding */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add border radius */
-    cursor: pointer; /* Change cursor to pointer */
-    margin-top: 5px; /* Add space above button */
-    transition: background-color 0.3s; /* Add transition effect */
-}
-
-/* Hover effect for share button */
-.share-btn:hover {
-    background-color: #ff7c70; /* Change background color on hover */
-}
