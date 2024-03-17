@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3').verbose();
 // SQLite database configuration
 const db = new sqlite3.Database('photos.db');
 db.serialize(() => {
-    db.run('CREATE TABLE IF NOT EXISTS photos (id INTEGER PRIMARY KEY, filename TEXT)');
+    db.run('CREATE TABLE IF NOT EXISTS photos (id INTEGER PRIMARY KEY, filename TEXT, name TEXT)');
 });
 
 // SQLite database configuration for users
