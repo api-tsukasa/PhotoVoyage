@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+  <!-- here to make a user admin you have to put this "<admin>user123</admin>" -->
 <admins>
     <admin>XFkjjp0</admin>
 </admins>
