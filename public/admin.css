@@ -1,4 +1,5 @@
 /* admin.css */
+@import url('https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css');
 
 /* Reset CSS */
 * {
@@ -17,15 +18,8 @@ body {
 /* Container Styles */
 .container {
     max-width: 1100px;
-    margin: 0 auto;
+    margin: 50px auto 0; /* Separación en la parte superior */
     padding: 40px;
-}
-
-/* Admin Grid */
-.admin-grid {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 20px;
 }
 
 /* Heading Styles */
@@ -38,35 +32,13 @@ h1 {
 
 /* List Styles */
 ul {
-    padding-left: 0;
-}
-
-li {
-    margin-bottom: 40px;
-    padding: 30px;
-    border-radius: 12px;
-    background-color: #fff;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-li:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-}
-
-li p {
-    color: #777;
-    font-size: 1rem;
+    list-style-type: none; /* Elimina los puntos de la lista */
 }
 
 /* Image Styles */
-img {
-    max-width: 50%;
-    display: block;
-    margin: 0 auto;
-    border-radius: 12px;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+.card-image {
+    max-width: 300px; /* Tamaño máximo de la imagen */
+    margin: 20px auto 40px; /* Margen inferior aumentado para separar la imagen */
 }
 
 /* Form Styles */
@@ -92,9 +64,10 @@ button:hover {
 }
 
 /* Back Link Styles */
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
+#backButton {
+    display: block;
+    margin-top: 20px; /* Ajuste para colocar más abajo el botón "Back to Admin Panel" */
+    text-align: center;
     text-decoration: none;
     color: #333;
     padding: 10px 20px;
@@ -104,54 +77,19 @@ button:hover {
     transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
-.back-link:hover {
+#backButton:hover {
     background-color: #333;
     color: #f9f9f9;
     transform: translateY(-3px);
 }
 
-/* Menu Toggle */
-.menu-toggle {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1;
-    cursor: pointer;
+/* Estilos añadidos */
+.card-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-/* Dropdown Styles */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    animation: slideDown 0.5s ease forwards;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-50%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.menu-toggle.active .dropdown-content {
-    display: block;
+.card-footer .button {
+    margin-top: 10px;
 }
