@@ -4,20 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery - Search Result</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="/public/admin.css">
 </head>
 <body>
-    <h1>Search Result</h1>
-    <ul>
-        <li>
-            <img src="/uploads/<%= photo.filename %>" alt="Photo" id="photo_<%= photo.id %>">
-            <p>File Name: <%= photo.filename %></p>
-            <p>ID: <%= photo.id %></p>
-            <form action="/admin/delete/<%= photo.id %>" method="post">
-                <button type="submit">Delete</button>
-            </form>
-        </li>
-    </ul>
-    <a href="/admin" class="back-link">Back to Admin Panel</a>
+    <section class="section">
+        <div class="container has-text-centered">
+            <h1 class="title">Search Result</h1>
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <ul>
+                        <li>
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="/uploads/<%= photo.filename %>" alt="Photo" id="photo_<%= photo.id %>">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p><strong>File Name:</strong> <%= photo.filename %></p>
+                                        <p><strong>ID:</strong> <%= photo.id %></p>
+                                    </div>
+                                </div>
+                                <footer class="card-footer">
+                                    <form action="/admin/delete/<%= photo.id %>" method="post">
+                                        <button type="submit" class="button is-danger card-footer-item">Delete</button>
+                                    </form>
+                                </footer>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="/admin" class="button is-primary">Back to Admin Panel</a>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
