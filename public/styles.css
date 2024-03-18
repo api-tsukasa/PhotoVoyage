@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif; /* Set default font */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
-    background-color: #f1f1f1; /* Set background color */
+    background-color: #ffffff; /* Set background color */
 }
 
 /* Container styles */
@@ -23,8 +23,9 @@ h1 {
 /* Toggle menu styles */
 .menu-toggle {
     position: absolute; /* Position the menu toggle */
-    top: 20px; /* Set top position */
-    left: 20px; /* Set left position */
+    top: 0; /* Set top position */
+    left: 0; /* Set left position */
+    margin: 10px; /* Add margin */
     z-index: 1; /* Set stacking order */
     cursor: pointer; /* Change cursor to pointer */
 }
@@ -33,31 +34,23 @@ h1 {
 .dropdown-content {
     display: none; /* Hide the dropdown content by default */
     position: absolute; /* Position the dropdown */
-    background-color: #f9f9f9; /* Set background color */
+    background-color: #fff; /* Set background color */
     min-width: 160px; /* Set minimum width */
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Add shadow */
+    padding: 10px 0; /* Add padding */
     z-index: 1; /* Set stacking order */
-    animation: slideDown 0.5s ease forwards; /* Add slide-down animation */
-}
-
-/* Keyframes for slide-down animation */
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-50%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    top: 30px; /* Set top position */
+    left: 0; /* Set left position */
+    border-radius: 5px; /* Add border radius */
 }
 
 /* Dropdown item styles */
 .dropdown-content a {
-    color: black; /* Set text color */
-    padding: 12px 16px; /* Add padding */
-    text-decoration: none; /* Remove underline */
     display: block; /* Display as block element */
+    padding: 10px 20px; /* Add padding */
+    color: #333; /* Set text color */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Add transition effect */
 }
 
 /* Hover effect for dropdown items */
@@ -68,6 +61,23 @@ h1 {
 /* Show dropdown content when menu toggle is active */
 .menu-toggle.active .dropdown-content {
     display: block; /* Display the dropdown content */
+}
+
+/* Container for uploaded images */
+.uploaded-img-container {
+    margin-top: 5px; /* Add space above container */
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: center; /* Center content horizontally */
+}
+
+/* Styles for uploaded images */
+.uploaded-img {
+    max-width: 500px; /* Set maximum width */
+    height: 200px; /* Set height to maintain aspect ratio */
+    border-radius: 5px; /* Add border radius */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+    margin: 0 auto; /* Center the image */
 }
 
 /* Gallery styles */
@@ -91,28 +101,6 @@ h1 {
 /* Hover effect for images */
 .gallery img:hover {
     transform: scale(1.05); /* Scale image on hover */
-}
-
-/* Responsive layout for small screens */
-@media (max-width: 600px) {
-    .gallery {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust column layout */
-    }
-}
-
-/* Container for uploaded images */
-.uploaded-img-container {
-    margin-top: 20px; /* Add space above container */
-    text-align: center; /* Center align text */
-}
-
-/* Styles for uploaded images */
-.uploaded-img {
-    max-width: 100%; /* Set maximum width */
-    height: auto; /* Set height to maintain aspect ratio */
-    border-radius: 5px; /* Add border radius */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow */
-    margin: 0 auto; /* Center the image */
 }
 
 /* Modal styles */
@@ -156,4 +144,28 @@ h1 {
 .close:focus {
     color: #bbb; /* Change text color on hover */
     text-decoration: none; /* Remove underline on hover */
+}
+
+/* Custom CSS */
+.image-container {
+    margin: 5px; /* Add margin */
+    position: relative; /* Set position */
+    cursor: pointer; /* Change cursor to pointer */
+    max-width: 350px; /* Set maximum width */
+    max-height: 300px; /* Set height */
+    background-color: #ffffff; /* Set background color */
+    border-radius: 10px; /* Add border radius */
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+    transition: transform 0.3s ease; /* Add transform transition */
+    text-align: center;
+}
+
+.image-container:hover {
+    transform: translateY(-5px); /* Translate on hover */
+}
+
+.image-container img {
+    width: auto; /* Set width to auto */
+    height: 100%; /* Set height to fill container */
+    border-radius: 10px 10px 0 0; /* Add border radius */
 }
