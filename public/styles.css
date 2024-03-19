@@ -1,3 +1,4 @@
+
 body {
     font-family: Arial, sans-serif; /* Set default font */
     margin: 0; /* Remove default margin */
@@ -28,6 +29,33 @@ h1 {
     margin: 10px; /* Add margin */
     z-index: 1; /* Set stacking order */
     cursor: pointer; /* Change cursor to pointer */
+}
+
+/* online users */
+.users-online {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    margin: 10px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+#users-online-container {
+    transition: transform 0.3s ease;
+}
+
+#users-online-container:hover {
+    transform: scale(1.1);
+}
+
+.emoji-size {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji-wrapper {
+    display: inline-block;
 }
 
 /* Dropdown menu styles */
@@ -94,14 +122,16 @@ h1 {
     height: auto; /* Set height to maintain aspect ratio */
     border-radius: 5px; /* Add border radius */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow */
-    transition: transform 0.2s; /* Add transform transition */
+    transition: transform 0.3s, box-shadow 0.3s; /* Add transform and shadow transition */
     cursor: pointer; /* Change cursor to pointer */
 }
 
-/* Hover effect for images */
+/* Smooth zoom effect for images on hover */
 .gallery img:hover {
     transform: scale(1.05); /* Scale image on hover */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
 }
+
 
 /* Modal styles */
 .modal {
