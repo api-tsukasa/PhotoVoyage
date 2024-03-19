@@ -31,6 +31,73 @@ h1 {
     cursor: pointer; /* Change cursor to pointer */
 }
 
+/* Dropdown menu styles */
+.dropdown-content {
+    display: none; /* Hide the dropdown content by default */
+    position: absolute; /* Position the dropdown */
+    background-color: #fff; /* Set background color */
+    min-width: 160px; /* Set minimum width */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Add shadow */
+    padding: 10px 0; /* Add padding */
+    z-index: 1; /* Set stacking order */
+    top: 30px; /* Set top position */
+    left: 0; /* Set left position */
+    border-radius: 5px; /* Add border radius */
+    animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Define the animation */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dropdown item styles */
+.dropdown-content a {
+    display: block; /* Display as block element */
+    padding: 10px 20px; /* Add padding */
+    color: #333; /* Set text color */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Add transition effect */
+    transition: background-color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Hover effect for dropdown items */
+.dropdown-content a:hover {
+    background-color: #f1f1f1; /* Change background color on hover */
+}
+
+/* Show dropdown content when menu toggle is active */
+.menu-toggle.active .dropdown-content {
+    display: block; /* Display the dropdown content */
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Container for uploaded images */
+.uploaded-img-container {
+    margin-top: 5px; /* Add space above container */
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: center; /* Center content horizontally */
+}
+
 /* online users */
 .users-online {
     position: absolute;
@@ -56,47 +123,6 @@ h1 {
 
 .emoji-wrapper {
     display: inline-block;
-}
-
-/* Dropdown menu styles */
-.dropdown-content {
-    display: none; /* Hide the dropdown content by default */
-    position: absolute; /* Position the dropdown */
-    background-color: #fff; /* Set background color */
-    min-width: 160px; /* Set minimum width */
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Add shadow */
-    padding: 10px 0; /* Add padding */
-    z-index: 1; /* Set stacking order */
-    top: 30px; /* Set top position */
-    left: 0; /* Set left position */
-    border-radius: 5px; /* Add border radius */
-}
-
-/* Dropdown item styles */
-.dropdown-content a {
-    display: block; /* Display as block element */
-    padding: 10px 20px; /* Add padding */
-    color: #333; /* Set text color */
-    text-decoration: none; /* Remove underline */
-    transition: background-color 0.3s; /* Add transition effect */
-}
-
-/* Hover effect for dropdown items */
-.dropdown-content a:hover {
-    background-color: #f1f1f1; /* Change background color on hover */
-}
-
-/* Show dropdown content when menu toggle is active */
-.menu-toggle.active .dropdown-content {
-    display: block; /* Display the dropdown content */
-}
-
-/* Container for uploaded images */
-.uploaded-img-container {
-    margin-top: 5px; /* Add space above container */
-    display: flex; /* Use flexbox for layout */
-    flex-wrap: wrap; /* Allow wrapping */
-    justify-content: center; /* Center content horizontally */
 }
 
 /* Styles for uploaded images */
