@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - Active Users</title>
+    <link rel="stylesheet" href="/public/active-users.css">
+</head>
+<body>
+    <!-- Menu -->
+    <div class="menu-toggle" id="menuToggle">
+        <!-- Icon and menu content -->
+        <svg xmlns="svgs/" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" id="menuIcon">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+        <div class="dropdown-content" id="dropdownContent">
+            <a href="/">Home</a>
+            <% if (isLoggedIn) { %>
+                <% if (isAdmin) { %>
+                    <a href="/admin">Admin Panel</a>
+                <% } %>
+                <a href="/logout">Logout</a>
+            <% } else { %>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Active Users</h1>
+        <p>Online Users: <%= activeUsersCount %></p>
+    </div>
+
+    <script>
+        var menuToggle = document.getElementById("menuToggle");
+        var menuIcon = document.getElementById("menuIcon");
+
+        menuToggle.addEventListener("click", function() {
+            menuToggle.classList.toggle("active");
+        });
+    </script>
+</body>
+</html>
