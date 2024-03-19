@@ -20,6 +20,7 @@
                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
             </svg>
             <div class="dropdown-content" id="dropdownContent">
+                <span class="dropdown-header">Pages</span>
                 <a href="/">Home</a>
                 <% if (isLoggedIn) { %>
                     <% if (isAdmin) { %>
@@ -30,8 +31,14 @@
                     <a href="/login">Login</a>
                     <a href="/register">Register</a>
                 <% } %>
+                <!-- New category: Information -->
+                <span class="dropdown-divider"></span>
+                <span class="dropdown-header">Information</span>
+                <a href="https://github.com/api-tsukasa/PhotoVoyage">Source Code</a>
+                <a href="https://github.com/PhotoVoyage">Github</a>
+                <a href="https://github.com/api-tsukasa/PhotoVoyage/issues/new/choose">Help</a>
             </div>
-        </div>
+        </div>        
     
         <div class="users-online" id="users-online-container">
             <a href="/active-users"><p>Active Users Count: <span class="emoji-wrapper"><%= activeUsersCount %> <img src="https://cdn3.emoji.gg/emojis/7586-tts-star-online.png" alt="Online Icon" class="emoji-size"></span></p></a>
