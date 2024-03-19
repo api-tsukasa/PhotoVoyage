@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const generateCaptcha = require('./services/captchaS');
 const { db, userDB } = require('./services/database');
 const { isAdmin } = require('./tools/adminUtils');
+const activeUsers = new Map();
 
 const app = express();
 const port = 3000;
@@ -191,7 +192,22 @@ app.get('/login', (req, res) => {
 
 app.use((req, res, next) => {
     delete req.session.message;
+    if (req.session.isLoggedIn) {
+        activeUsers.set(req.session.username, true);
+    }
+
     next();
+});
+
+app.use('/logout', (req, res, next) => {
+    if (req.session.isLoggedIn) {
+        activeUsers.delete(req.session.username);
+    }
+    next();
+});
+
+app.get('/active-users', (req, res) => {
+    res.send(`Usuarios activos: ${activeUsers.size}`);
 });
 
 // Path to display the registration page
@@ -209,8 +225,9 @@ app.get('/', (req, res) => {
         }
         const isLoggedIn = req.session.isLoggedIn;
         const username = req.session.username;
+        const activeUsersCount = activeUsers.size;
         const isAdmin = req.session.isAdmin || false; // Check if isAdmin is set in session, default to false if not set
-        res.render('index', { photos: rows, isLoggedIn: isLoggedIn, isAdmin: isAdmin });
+        res.render('index', { photos: rows, isLoggedIn: isLoggedIn, isAdmin: isAdmin, activeUsersCount: activeUsersCount });
     });
 });
 
