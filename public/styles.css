@@ -31,6 +31,18 @@ h1 {
     cursor: pointer; /* Change cursor to pointer */
 }
 
+.dropdown-header {
+    padding: 10px 20px; /* Add padding */
+    font-weight: bold; /* Set font weight */
+    color: #333; /* Set text color */
+    text-transform: uppercase; /* Transform text to uppercase */
+}
+
+.dropdown-divider {
+    border-bottom: 1px solid #ccc; /* Add border bottom */
+    margin: 5px 0; /* Add margin */
+}
+
 /* Dropdown menu styles */
 .dropdown-content {
     display: none; /* Hide the dropdown content by default */
