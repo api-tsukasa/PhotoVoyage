@@ -63,12 +63,14 @@ button {
     font-size: 16px;
     cursor: pointer;
     text-transform: uppercase;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Agregamos una sombra suave */
 }
 
 button:hover {
-    background-color: #00d1b2;
+    background-color: #00c1a7; /* Color ligeramente más oscuro en el hover */
     transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Aumentamos la intensidad de la sombra al hacer hover */
 }
 
 .message {
@@ -89,7 +91,6 @@ button:hover {
     }
 }
 
-/* Menu Toggle */
 .menu-toggle {
     position: absolute;
     top: 20px;
@@ -98,7 +99,6 @@ button:hover {
     cursor: pointer;
 }
 
-/* Dropdown Styles */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -106,13 +106,15 @@ button:hover {
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    animation: slideDown 0.5s ease forwards;
+    /* Animation */
+    animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
+/* Define the animation */
 @keyframes slideDown {
     from {
         opacity: 0;
-        transform: translateY(-50%);
+        transform: translateY(-10px);
     }
     to {
         opacity: 1;
@@ -125,6 +127,8 @@ button:hover {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    /* Animation for Links */
+    transition: background-color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .dropdown-content a:hover {
@@ -133,6 +137,20 @@ button:hover {
 
 .menu-toggle.active .dropdown-content {
     display: block;
+    /* Animation */
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .security-tip {
