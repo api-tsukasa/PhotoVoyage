@@ -67,6 +67,12 @@ app.get('/public/user-details.css', function(req, res) {
     res.sendFile(__dirname + '/public/user-details.css');
 });
 
+// active-users.css
+app.get('/public/active-users.css', function(req, res) {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(__dirname + '/public/active-users.css');
+});
+
 // Configure Express to serve static files from the "uploads" folder
 app.use('/uploads', express.static('uploads'));
 
