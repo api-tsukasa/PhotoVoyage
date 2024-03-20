@@ -17,22 +17,40 @@ h1 {
     color: #333;
 }
 
+/* Toggle menu styles */
 .menu-toggle {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1;
-    cursor: pointer;
+    position: absolute; /* Position the menu toggle */
+    top: 0; /* Set top position */
+    left: 0; /* Set left position */
+    margin: 10px; /* Add margin */
+    z-index: 1; /* Set stacking order */
+    cursor: pointer; /* Change cursor to pointer */
 }
 
+.dropdown-header {
+    padding: 10px 20px; /* Add padding */
+    font-weight: bold; /* Set font weight */
+    color: #333; /* Set text color */
+    text-transform: uppercase; /* Transform text to uppercase */
+}
+
+.dropdown-divider {
+    border-bottom: 1px solid #ccc; /* Add border bottom */
+    margin: 5px 0; /* Add margin */
+}
+
+/* Dropdown menu styles */
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    /* Animation */
+    display: none; /* Hide the dropdown content by default */
+    position: absolute; /* Position the dropdown */
+    background-color: #fff; /* Set background color */
+    min-width: 160px; /* Set minimum width */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Add shadow */
+    padding: 10px 0; /* Add padding */
+    z-index: 1; /* Set stacking order */
+    top: 30px; /* Set top position */
+    left: 0; /* Set left position */
+    border-radius: 5px; /* Add border radius */
     animation: slideDown 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
@@ -48,26 +66,27 @@ h1 {
     }
 }
 
+/* Dropdown item styles */
 .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    /* Animation for Links */
+    display: block; /* Display as block element */
+    padding: 10px 20px; /* Add padding */
+    color: #333; /* Set text color */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Add transition effect */
     transition: background-color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Hover effect for dropdown items */
 .dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #f1f1f1; /* Change background color on hover */
 }
 
+/* Show dropdown content when menu toggle is active */
 .menu-toggle.active .dropdown-content {
-    display: block;
-    /* Animation */
+    display: block; /* Display the dropdown content */
     animation: fadeIn 0.3s ease forwards;
 }
 
-/* Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
