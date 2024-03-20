@@ -68,6 +68,9 @@
                                 <div class="control">
                                     <input class="input" type="password" id="password" name="password" required>
                                 </div>
+                                <div class="control">
+                                    <button class="button is-primary toggle-password" type="button">Show Password</button>
+                                </div>
                                 <div id="password-strength">
                                     <div class="progress">
                                         <div id="password-strength-bar" class="progress-bar"></div>
@@ -113,13 +116,14 @@
             return securityTips[randomIndex];
         }
 
-        window.onload = function() {
+        document.addEventListener("DOMContentLoaded", function() {
             var tipElement = document.getElementById("random-tip");
             tipElement.textContent = getRandomTip();
             
             var passwordInput = document.getElementById("password");
             var strengthBar = document.getElementById("password-strength-bar");
             var strengthText = document.getElementById("password-strength-text");
+            var togglePasswordButton = document.querySelector('.toggle-password');
 
             passwordInput.addEventListener("input", function() {
                 var password = passwordInput.value;
@@ -129,7 +133,13 @@
                 strengthBar.className = "progress-bar level-" + strength;
                 strengthText.textContent = "Password Strength: " + strength + "/4";
             });
-        };
+
+            togglePasswordButton.addEventListener('click', function() {
+                var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
+            });
+        });
 
         function calculatePasswordStrength(password) {
             // Evaluate password strength here, you can use any algorithm or library for this purpose
