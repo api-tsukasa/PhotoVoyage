@@ -7,14 +7,36 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <style>
         .custom-button {
-            background-color: #f05c54; /* Cambia el color de fondo del botón a #f05c54 */
-            padding: 12px 24px; /* Ajusta el relleno del botón para hacerlo más grande */
-            font-size: 1.25rem; /* Ajusta el tamaño del texto del botón */
-            font-weight: bold; /* Hace que el texto del botón sea negrita */
+            background-color: #f05c54;
+            padding: 12px 24px;
+            font-size: 1.25rem;
+            font-weight: bold;
         }
 
         .custom-button:hover {
-            background-color: #FF8C66; /* Cambia el color de fondo cuando el mouse está encima del botón */
+            background-color: #FF8C66;
+        }
+        #password-strength {
+            margin-top: 5px;
+        }
+        #password-strength .progress {
+            margin-bottom: 5px;
+        }
+        #password-strength-bar {
+            height: 20px;
+            border-radius: 10px;
+        }
+        #password-strength-bar.level-1 {
+            background-color: #FF3838;
+        }
+        #password-strength-bar.level-2 {
+            background-color: #FF9F38;
+        }
+        #password-strength-bar.level-3 {
+            background-color: #FFD438;
+        }
+        #password-strength-bar.level-4 {
+            background-color: #5EFF38;
         }
     </style>
 </head>
@@ -29,7 +51,6 @@
                             <p class="notification is-info"><%= message %></p>
                         <% } %>
                         <form action="/register" method="POST">
-
                             <div class="field">
                                 <label class="label" for="username">Username</label>
                                 <div class="control">
@@ -37,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="field">
-                                <label for="label" for="email">Email</label>
+                                <label for="email" class="label">Email</label>
                                 <div class="control">
                                     <input class="input" type="text" id="email" name="email" required>
                                 </div>
@@ -46,6 +67,12 @@
                                 <label class="label" for="password">Password</label>
                                 <div class="control">
                                     <input class="input" type="password" id="password" name="password" required>
+                                </div>
+                                <div id="password-strength">
+                                    <div class="progress">
+                                        <div id="password-strength-bar" class="progress-bar"></div>
+                                    </div>
+                                    <p id="password-strength-text" class="help"></p>
                                 </div>
                                 <p class="help">Tip: Use a strong password with a mix of letters, numbers, and symbols.</p>
                             </div>
@@ -89,7 +116,36 @@
         window.onload = function() {
             var tipElement = document.getElementById("random-tip");
             tipElement.textContent = getRandomTip();
+            
+            var passwordInput = document.getElementById("password");
+            var strengthBar = document.getElementById("password-strength-bar");
+            var strengthText = document.getElementById("password-strength-text");
+
+            passwordInput.addEventListener("input", function() {
+                var password = passwordInput.value;
+                var strength = calculatePasswordStrength(password);
+                var widthPercentage = (strength / 4) * 100;
+                strengthBar.style.width = widthPercentage + "%";
+                strengthBar.className = "progress-bar level-" + strength;
+                strengthText.textContent = "Password Strength: " + strength + "/4";
+            });
         };
+
+        function calculatePasswordStrength(password) {
+            // Evaluate password strength here, you can use any algorithm or library for this purpose
+            // For simplicity, I'm just checking the length
+            if (password.length < 6) {
+                return 1;
+            } else if (password.length < 10) {
+                return 2;
+            } else if (password.match(/[a-zA-Z]/) && password.match(/[0-9]/) && password.match(/[^a-zA-Z0-9]/)) {
+                return 4;
+            } else if (password.match(/[a-zA-Z]/) && password.match(/[0-9]/)) {
+                return 3;
+            } else {
+                return 2;
+            }
+        }
     </script>
 </body>
 </html>
