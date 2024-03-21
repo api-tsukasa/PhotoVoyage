@@ -1,3 +1,7 @@
+// PhotoVoyage
+// Code developed by the photoVoyage team and collaborators
+// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
+
 const fs = require('fs');
 const { parseString } = require('xml2js');
 
