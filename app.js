@@ -1,3 +1,7 @@
+// PhotoVoyage
+// Code developed by the photoVoyage team and collaborators
+// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
+
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
