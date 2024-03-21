@@ -7,16 +7,16 @@ const multer = require('multer');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const cookieParser = require('cookie-parser');
 
 const generateCaptcha = require('./services/captchaS');
 const { db, userDB } = require('./services/database');
 const { isAdmin } = require('./tools/adminUtils');
+const { configureCookieParser, setLoggedInUserCookie } = require('./tools/cookieHandler');
 const activeUsers = new Map();
 
 const app = express();
 const port = 3000;
-app.use(cookieParser());
+configureCookieParser(app);
 
 app.use(session({
     secret: 'secret-key',
@@ -146,7 +146,7 @@ app.post('/login', async (req, res) => {
                 res.status(401).redirect('/error');
             } else {
                 // Set a cookie named 'loggedInUser' with the username
-                res.cookie('loggedInUser', username, { expires: expirationDate, httpOnly: true })
+                setLoggedInUserCookie(res, username, expirationDate);
                 req.session.isLoggedIn = true;
                 req.session.username = username;
                 req.session.isAdmin = isAdmin(username); // Set isAdmin flag based on user role
