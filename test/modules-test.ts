@@ -10,7 +10,6 @@ interface Photo {
 const photos: Photo[] = [
     { id: 1, filename: "photo1.jpg" },
     { id: 2, filename: "photo2.jpg" },
-    // Agrega más fotos si es necesario
 ];
 
 function generateAdminPanel(photos: Photo[]): string {
@@ -47,6 +46,5 @@ function generateAdminPanel(photos: Photo[]): string {
     return adminPanelHTML;
 }
 
-// Ejemplo de uso
 const adminPanel: string = generateAdminPanel(photos);
-console.log(adminPanel); // Esto imprimirá el HTML del panel de administración en la consola
+console.log(adminPanel);
