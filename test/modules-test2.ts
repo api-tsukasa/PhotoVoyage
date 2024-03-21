@@ -1,3 +1,7 @@
+// PhotoVoyage
+// Code developed by the photoVoyage team and collaborators
+// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
+
 interface Photo {
     filename: string;
 }
@@ -7,13 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuIcon = document.getElementById("menuIcon") as HTMLElement;
     const gallery = document.getElementById('gallery') as HTMLElement;
 
-    // Agregar un evento de clic al botón de menú
     menuToggle.addEventListener("click", () => {
-        // Alternar la clase 'active' en el botón de menú
         menuToggle.classList.toggle("active");
     });
 
-    // Cargar las fotos al cargar la página
     fetch('/photos')
         .then(response => response.json())
         .then((data: Photo[]) => {
@@ -31,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(error => console.error('Error fetching photos:', error));
 
-    // Cerrar la ventana modal al hacer clic en el botón de cerrar
     document.getElementsByClassName('close')[0].addEventListener('click', () => {
         const previewModal = document.getElementById('previewModal') as HTMLElement;
         previewModal.style.display = 'none';
