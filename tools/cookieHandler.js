@@ -1,3 +1,7 @@
+// PhotoVoyage
+// Code developed by the photoVoyage team and collaborators
+// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
+
 const cookieParser = require('cookie-parser');
 
 function configureCookieParser(app) {
