@@ -62,6 +62,12 @@ The first account with an administrator is called `XFkjjp0` but it can be modifi
 * Preview the images
 * Zoom in and out on images
 
+# Sponsors
+
+Thank you very much for supporting us in this project ⭐
+
+<a href="https://github.com/Sstudios-Dev"><img src="https://avatars.githubusercontent.com/u/156860248?s=200&v=4" height="128" width="128" /></a>
+
 # Contributors
 
 Thank you very much for helping in the project ❤
