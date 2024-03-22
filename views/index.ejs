@@ -1,7 +1,3 @@
-// PhotoVoyage
-// Code developed by the photoVoyage team and collaborators
-// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,8 +59,11 @@
     <!-- Modal window for preview -->
     <div id="previewModal" class="modal">
         <span class="close">&times;</span>
-        <img class="modal-content" id="previewImage">
+        <div class="modal-content">
+            <img id="previewImage" class="modal-img">
+        </div>
     </div>
+    
     <script>
         var menuToggle = document.getElementById("menuToggle");
         
@@ -116,43 +115,42 @@
 
         window.onload = () => {
             fetch('/photos')
-                .then(response => response.json())
-                .then(data => {
-                    const gallery = document.getElementById('gallery');
-                    data.forEach(photo => {
-                        const imgContainer = document.createElement('div');
-                        imgContainer.classList.add('image-container');
+            .then(response => response.json())
+            .then(data => {
+                const gallery = document.getElementById('gallery')
+                data.forEach(photo => {
+                    const imgContainer = document.createElement('div');
+                    imgContainer.classList.add('image-container');
 
-                        const img = document.createElement('img');
-                        const filename = photo.filename.toLowerCase();
-                        const staticSrc = `/uploads/${filename.split('.')[0]}.gif`;
+                    const img = document.createElement('img');
+                    const filename = photo.filename.toLowerCase();
+                    const staticSrc = `/uploads/${filename.split('.')[0]}.gif`;
 
-                        if (filename.endsWith('.gif')) {
-                            img.src = staticSrc;
-                            img.dataset.src = `/uploads/${filename}`;
-                            img.loading = 'lazy'; // Lazy loading
-                        } else {
-                            img.src = `/uploads/${filename}`;
-                        }
+                    if (filename.endsWith('.gif')) {
+                        img.src = staticSrc;
+                        img.dataset.src = `/uploads/${filename}`;
+                        img.loading = 'lazy'; // Lazy loading
+                    } else {
+                        img.src = `/uploads/${filename}`;
+                    }
 
-                        img.addEventListener('click', function() {
-                            const modal = document.getElementById('previewModal');
-                            const modalImg = document.getElementById('previewImage');
-                            modal.style.display = 'block';
+                    img.addEventListener('click', function() {
+                        const modal = document.getElementById('previewModal');
+                        const modalImg = document.getElementById('previewImage');
+                        modal.style.display = 'block';
 
-                            // Set the source of the modal image to the original image
-                            modalImg.src = img.dataset.src || img.src;
-                        });
-
-                        const imageName = document.createElement('div');
-                        imageName.textContent = photo.name ? photo.name : 'Unknown';
-
-                        imgContainer.appendChild(img);
-                        imgContainer.appendChild(imageName); // Add the image name
-                        gallery.appendChild(imgContainer);
+                        // Set the source of the modal image to the original image
+                        modalImg.src = img.dataset.src || img.src;
                     });
-                })
-                .catch(error => console.error('Error fetching photos:', error));
+
+                    const imageName = document.createElement('div');
+                    imageName.textContent = photo.name ? photo.name : 'Unknown';
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(imageName); // Add the image name
+                    gallery.appendChild(imgContainer);
+                });
+            })
+            .catch(error => console.error('Error fetching photos:', error));
         };
 
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
