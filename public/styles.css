@@ -1,4 +1,3 @@
-
 body {
     font-family: Arial, sans-serif; /* Set default font */
     margin: 0; /* Remove default margin */
@@ -184,26 +183,24 @@ h1 {
 
 /* Modal styles */
 .modal {
-    display: none; /* Hide the modal by default */
-    position: fixed; /* Position the modal */
-    z-index: 1; /* Set stacking order */
-    padding-top: 50px; /* Add padding at the top */
+    display: none; /* Hide the modal window by default */
+    position: fixed; /* Fixed position to keep it in place */
+    z-index: 1; /* Place modal window on top of other content */
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Allow scrolling */
-    background-color: rgb(0,0,0); /* Set background color */
-    background-color: rgba(0,0,0,0.9); /* Set background color with opacity */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Allow vertical scrolling if needed */
+    background-color: rgb(0,0,0); /* Black background color */
+    background-color: rgba(0,0,0,0.9); /* Black background color with transparency */
 }
 
 /* Modal content styles */
 .modal-content {
-    margin: auto; /* Center the content */
-    display: block; /* Display as block element */
-    width: 80%; /* Set width */
-    max-width: 700px; /* Set maximum width */
-    max-height: 80%; /* Set maximum height */
+    margin: auto; /* Center the content vertically and horizontally */
+    display: block;
+    max-width: 90%; /* Maximum width of the content */
+    max-height: 90%; /* Maximum height of the content */
     animation: fadeInBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -223,23 +220,33 @@ h1 {
     }
 }
 
+/* Image inside the modal */
+.modal-img {
+    width: 100%; /* Set the image width to 100% of the container */
+    height: auto; /* Auto height to maintain aspect ratio */
+    display: block;
+    margin: auto; /* Center the image */
+    max-width: 100%; /* Maximum width of the image */
+    max-height: 100%; /* Maximum height of the image */
+}
+
 /* Close button styles */
 .close {
-    position: absolute; /* Position the close button */
-    top: 15px; /* Set top position */
-    right: 35px; /* Set right position */
-    color: #fff; /* Set text color */
-    font-size: 40px; /* Set font size */
-    font-weight: bold; /* Set font weight */
-    transition: 0.3s; /* Add transition effect */
-    cursor: pointer; /* Change cursor to pointer */
+    position: absolute; /* Absolute position */
+    top: 15px; /* Distance from the top */
+    right: 35px; /* Distance from the right */
+    font-size: 30px; /* Font size */
+    font-weight: bold; /* Font weight */
+    color: #f1f1f1; /* Text color */
+    transition: 0.3s; /* Smooth transition */
 }
 
 /* Hover effect for close button */
 .close:hover,
 .close:focus {
-    color: #bbb; /* Change text color on hover */
-    text-decoration: none; /* Remove underline on hover */
+    color: #bbb; /* Change text color on hover or focus */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Change cursor on hover */
 }
 
 /* Custom CSS */
