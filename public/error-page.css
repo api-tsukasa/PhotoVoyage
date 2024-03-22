@@ -31,7 +31,7 @@ p {
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #00d1b2;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
@@ -39,15 +39,15 @@ p {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #00c1a7;
 }
 
 #error-text {
-    overflow: hidden; /* Para ocultar el texto que se sale */
-    white-space: nowrap; /* Para que el texto no se divida en varias líneas */
-    animation: typing 3s steps(40, end); /* Animación de escribir */
-    border-right: 2px solid #333; /* Efecto de cursor */
-    padding-right: 5px; /* Espacio para el cursor */
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 3s steps(40, end);
+    border-right: 2px solid #333;
+    padding-right: 5px;
 }
 
 @keyframes typing {
