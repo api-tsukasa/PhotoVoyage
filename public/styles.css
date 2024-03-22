@@ -193,18 +193,18 @@ h1 {
     width: 80%; /* Set width */
     max-width: 700px; /* Set maximum width */
     max-height: 80%; /* Set maximum height */
-    animation: fadeInScale 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    animation: fadeInBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* Animation to show preview */
-@keyframes fadeInScale {
+@keyframes fadeInBounce {
     0% {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.8);
     }
-    60% {
+    70% {
         opacity: 1;
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
     100% {
         opacity: 1;
