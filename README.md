@@ -59,6 +59,8 @@ The first account with an administrator is called `XFkjjp0` but it can be modifi
 * Captcha system
 * Security system
 * User protection
+* Preview the images
+* Zoom in and out on images
 
 # Contributors
 
