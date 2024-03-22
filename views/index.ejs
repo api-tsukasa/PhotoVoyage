@@ -56,14 +56,21 @@
         </div>
         <div class="uploaded-img-container" id="gallery"></div>
     </div>
+
     <!-- Modal window for preview -->
     <div id="previewModal" class="modal">
         <span class="close">&times;</span>
         <div class="modal-content">
             <img id="previewImage" class="modal-img">
         </div>
+        <div class="zoom-controls">
+            <button id="zoomIn">+</button>
+            <button id="zoomOut">-</button>
+        </div>
+        <div class="current-image">
+            Image <span id="currentImageNumber"></span> of <span id="totalImages"></span>
+        </div>
     </div>
-    
     <script>
         var menuToggle = document.getElementById("menuToggle");
         
@@ -152,6 +159,39 @@
             })
             .catch(error => console.error('Error fetching photos:', error));
         };
+
+        let zoomLevel = 1;
+        
+        document.getElementById('zoomIn').addEventListener('click', function() {
+            zoomLevel += 0.1;
+            document.getElementById('previewImage').style.transform = `scale(${zoomLevel})`;
+        });
+
+        document.getElementById('zoomOut').addEventListener('click', function() {
+            zoomLevel -= 0.1;
+            document.getElementById('previewImage').style.transform = `scale(${zoomLevel})`;
+        });
+
+        let currentImageIndex = 0;
+
+        document.getElementById('previewModal').addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal-img')) {
+                currentImageIndex = (currentImageIndex + 1) % data.length;
+                displayImage(data[currentImageIndex], currentImageIndex + 1, data.length);
+            }
+        });
+
+        function displayImage(photo, current, total) {
+            const modalImg = document.getElementById('previewImage');
+            const currentImageNumber = document.getElementById('currentImageNumber');
+            const totalImages = document.getElementById('totalImages');
+
+            modalImg.src = photo.src;
+            modalImg.style.transform = `scale(1)`;
+            zoomLevel = 1;
+            currentImageNumber.textContent = current;
+            totalImages.textContent = total;
+        }
 
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
             document.getElementById('previewModal').style.display = 'none';
