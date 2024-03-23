@@ -1,14 +1,10 @@
-// PhotoVoyage
-// Code developed by the photoVoyage team and collaborators
-// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 404 - Página no encontrada</title>
+    <title>PhotoVoyage - Page Error</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="/public/error-page.css">
     <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
@@ -31,12 +27,11 @@
         </div>
     </div>
     <script>
-    // Esta parte es opcional, solo si quieres que la animación se reproduzca cuando se cargue la página
         window.addEventListener('load', () => {
             const text = document.getElementById('error-text');
-            text.style.animation = 'none'; // Se detiene la animación
+            text.style.animation = 'none';
             text.offsetHeight; // Se fuerza un reflow
-            text.style.animation = 'typing 3s steps(40, end)'; // Se reinicia la animación
+            text.style.animation = 'typing 3s steps(40, end)';
         });
         
         const tooltip = document.getElementById('tooltip');
