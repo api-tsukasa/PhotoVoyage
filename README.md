@@ -62,6 +62,12 @@ The first account with an administrator is called `XFkjjp0` but it can be modifi
 * Preview the images
 * Zoom in and out on images
 
+# PhotoVoyage-languages App
+
+It is an app developed by the sstudios team with the help of some members of photoVoyage that allows you to download official and community translations for the photoVoyage web app The app has two versions that is programmed the first version is the one that is programmed with python and the second is the java both do the same function but you can use it anyone depends on your taste
+
+Repository: https://github.com/PhotoVoyage/PhotoVoyage-languages
+
 # Sponsors
 
 Thank you very much for supporting us in this project ⭐
