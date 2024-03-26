@@ -13,6 +13,11 @@
     <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
 </head>
 <body>
+        <!-- Notification -->
+        <div id="notification" class="notification is-danger is-hidden">
+            <button class="delete" onclick="dismissNotification()"></button>
+            Watch out for security patches! The latest security patch is available at the  <a href="https://github.com/api-tsukasa/PhotoVoyage/releases" target="_blank">following link</a>.
+        </div>
 
     <div class="container">
         <div class="columns">
@@ -26,6 +31,9 @@
                     </a>
                     <a class="panel-block" href="/admin-users">
                         Users
+                    </a>
+                    <a class="panel-block" href="/tools">
+                        Tools
                     </a>
                     <a class="panel-block" href="/logout">
                         Logout
@@ -74,13 +82,12 @@
     </div>
 
     <script>
-        var menuToggle = document.getElementById("menuToggle");
-        var menuIcon = document.getElementById("menuIcon");
+        function dismissNotification() {
+            document.getElementById('notification').classList.add('is-hidden');
+        }
 
-        // Agregar un evento de clic al botón de menú
-        menuToggle.addEventListener("click", function() {
-            // Alternar la clase 'active' en el botón de menú
-            menuToggle.classList.toggle("active");
+        window.addEventListener('load', function() {
+            document.getElementById('notification').classList.remove('is-hidden');
         });
     </script>
 </body>
