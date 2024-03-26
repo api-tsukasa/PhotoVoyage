@@ -44,17 +44,26 @@ header {
 
 nav {
     margin-top: 20px;
-    animation: fadeInRight 0.5s ease;
+    opacity: 0; /* Inicialmente invisible */
+    transform: translateY(-50px) rotateZ(-10deg);
+    animation: fadeInRight 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
+               rotateIn 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.3s forwards;
+    /* Utilizando funciones de temporización de bezier para transiciones más espectaculares */
 }
 
 @keyframes fadeInRight {
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateZ(0);
+    }
+}
+
+@keyframes rotateIn {
     from {
-        transform: translateX(-100%);
-        opacity: 0;
+        transform: rotateZ(-200deg);
     }
     to {
-        transform: translateX(0);
-        opacity: 1;
+        transform: rotateZ(0);
     }
 }
 
