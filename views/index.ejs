@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="/public/styles.css">
     <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
     <!-- Include Bulma CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>    
 </head>
 <body>
     <div class="container">
@@ -81,12 +82,21 @@
         
         // Event listener for the Upload button
         document.getElementById("uploadBtn").addEventListener("click", function() {
-            // Ask for the image name
             var imageName = prompt("Please enter the name of the image:");
             if (imageName) {
-                // Store the image name in the input field
+                var imageNameLowerCase = imageName.toLowerCase();
+                var forbiddenNames = ["hentai", "rule34", "porhub", "xxx", "xvideos", "xnxx"];
+
+                if (forbiddenNames.includes(imageNameLowerCase)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'This name is not allowed. Please choose another name.'
+                    });
+                    
+                    return;
+                }
                 document.getElementById('photoName').value = imageName;
-                // Click on the file input
                 document.querySelector('.file-input').click();
             }
         });
