@@ -44,14 +44,14 @@ header {
 
 nav {
     margin-top: 20px;
-    opacity: 0; /* Inicialmente invisible */
+    opacity: 0;
     transform: translateY(-50px) rotateZ(-10deg);
-    animation: fadeInRight 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
+    animation: fadeInRotate 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
                rotateIn 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.3s forwards;
-    /* Utilizando funciones de temporización de bezier para transiciones más espectaculares */
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-@keyframes fadeInRight {
+@keyframes fadeInRotate {
     to {
         opacity: 1;
         transform: translateY(0) rotateZ(0);
@@ -71,11 +71,12 @@ nav a {
     color: var(--secondary-color);
     text-decoration: none;
     margin: 0 10px;
-    transition: color 0.3s ease;
+    transition: color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 nav a:hover {
     color: var(--link-hover-color);
+    transform: translateY(-3px);
 }
 
 .container {
