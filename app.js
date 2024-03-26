@@ -77,6 +77,12 @@ app.get('/public/active-users.css', function(req, res) {
     res.sendFile(__dirname + '/public/active-users.css');
 });
 
+// tools.css
+app.get('/public/tools.css', function(req, res) {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(__dirname + '/public/tools.css');
+});
+
 // Configure Express to serve static files from the "uploads" folder
 app.use('/uploads', express.static('uploads'));
 
@@ -268,6 +274,10 @@ function requireAdmin(req, res, next) {
         res.status(403).redirect('/error');
     }
 }
+
+app.get('/tools', (req, res) => {
+    res.render('tools');
+})
 
 // Path to search for a photo by ID
 app.get('/admin/search', requireLogin, (req, res) => {
