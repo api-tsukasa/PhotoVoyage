@@ -25,8 +25,20 @@ app.use(session({
     cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 } // 2 day expiration
 }));
 
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image/') || file.mimetype === 'image/gif') {
+        cb(null, true);
+    } else {
+        req.fileValidationError = 'Only images and GIFs are allowed to be uploaded';
+        cb(null, false);
+    }
+};
+
 // Multer configuration for uploading files
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({
+    dest: 'uploads/',
+    fileFilter: fileFilter
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -189,6 +201,10 @@ app.post('/upload', upload.single('photo'), (req, res) => {
         } else {
             res.status(400).redirect('/error'); // Handle the case where photo.filename is undefined
         }
+    }
+
+    if (req.fileValidationError) {
+        return res.status(400).send(req.fileValidationError);
     }
 });
 
