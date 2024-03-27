@@ -1,6 +1,6 @@
 <img align=center src="https://raw.githubusercontent.com/api-tsukasa/PhotoVoyage/master/.github/assets/banner.png">
 
-PhotoVoyage is a platform for exploring and sharing travel and adventure photos from around the world. Discover new places, share your experiences and connect with other photography lovers on an exciting visual journey.
+PhotoVoyage is an open source web application for hosting photos of any kind can be Travel, countries, Anime, etc. It has a register and login system also with an admin panel to manage the images uploaded on the platform.
 
 Demo: https://photovoyage-main.onrender.com/
 
