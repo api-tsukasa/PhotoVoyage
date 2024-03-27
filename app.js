@@ -13,6 +13,7 @@ const { db, userDB } = require('./services/database');
 const { isAdmin } = require('./tools/adminUtils');
 const { configureCookieParser, setLoggedInUserCookie } = require('./tools/cookieHandler');
 const fileFilter = require('./tools/fileFilter');
+const { sendDiscordNotification, setNotifications } = require('./services/discordNotifier');
 const activeUsers = new Map();
 
 const app = express();
@@ -175,18 +176,19 @@ app.get('/logout', (req, res) => {
 // Route to upload photos
 app.post('/upload', upload.single('photo'), (req, res) => {
     const photo = req.file;
-    const photoName = req.body.photoName; // Obtener el nombre de la imagen del cuerpo de la solicitud
+    const photoName = req.body.photoName;
 
-    if (!photo || !photoName) { // Verificar si la imagen y el nombre están presentes
+    if (!photo || !photoName) {
         res.status(400).redirect('/error');
     } else {
-        // Insertar la información de la foto en la base de datos
         if (photo.filename) {
             db.run('INSERT INTO photos (filename, name) VALUES (?, ?)', [photo.filename, photoName], (err) => {
                 if (err) {
                     res.status(500).redirect('/error');
                 } else {
-                    // Redirigir a la página principal después de la carga exitosa
+                    const photoURL = `http://localhost:${port}/uploads/${photo.filename}.png`;
+                    sendDiscordNotification(photoName, photoURL);
+
                     res.redirect('/');
                 }
             });
