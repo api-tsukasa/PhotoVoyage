@@ -85,7 +85,7 @@
             var imageName = prompt("Please enter the name of the image:");
             if (imageName) {
                 var imageNameLowerCase = imageName.toLowerCase();
-                var forbiddenNames = ["hentai", "rule34", "porhub", "xxx", "xvideos", "xnxx"];
+                var forbiddenNames = ["hentai", "rule34", "porhub", "xxx", "xvideos", "xnxx", ".com", ".net", ".org", ".xyz", ".store", ".lat"];
 
                 if (forbiddenNames.includes(imageNameLowerCase)) {
                     Swal.fire({
