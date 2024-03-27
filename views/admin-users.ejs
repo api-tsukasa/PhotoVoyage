@@ -1,7 +1,3 @@
-// PhotoVoyage
-// Code developed by the photoVoyage team and collaborators
-// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,26 +29,21 @@
         <% }); %>
     </ul>
 
-    <!-- Script para manejar clics en enlaces de usuario -->
     <script>
         var menuToggle = document.getElementById("menuToggle");
         var menuIcon = document.getElementById("menuIcon");
 
-        // Agregar un evento de clic al botón de menú
         menuToggle.addEventListener("click", function() {
-            // Alternar la clase 'active' en el botón de menú
             menuToggle.classList.toggle("active");
         });
 
-        // Mostrar los elementos gradualmente
         document.addEventListener("DOMContentLoaded", function() {
             var userItems = document.querySelectorAll(".user-item");
 
-            // Agregar la clase 'show' con un retraso escalonado
             userItems.forEach(function(item, index) {
                 setTimeout(function() {
                     item.classList.add("show");
-                }, index * 100); // Ajusta el retraso según lo desees
+                }, index * 100);
             });
         });
 
@@ -68,7 +59,6 @@
                         return response.text();
                     })
                     .then(data => {
-                        // Aquí puedes manejar la respuesta del servidor, por ejemplo, redirigiendo a una nueva página
                         window.location.href = `/admin-users/${userId}`;
                     })
                     .catch(error => console.error('Error:', error));
