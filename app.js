@@ -1,5 +1,5 @@
 // PhotoVoyage
-// Code developed by the photoVoyage team and collaborators.
+// Code developed by the photoVoyage team and collaborators
 // https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
 
 const express = require('express');
