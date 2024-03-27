@@ -12,6 +12,7 @@ const generateCaptcha = require('./services/captchaS');
 const { db, userDB } = require('./services/database');
 const { isAdmin } = require('./tools/adminUtils');
 const { configureCookieParser, setLoggedInUserCookie } = require('./tools/cookieHandler');
+const fileFilter = require('./tools/fileFilter');
 const activeUsers = new Map();
 
 const app = express();
@@ -24,15 +25,6 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 } // 2 day expiration
 }));
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/') || file.mimetype === 'image/gif') {
-        cb(null, true);
-    } else {
-        req.fileValidationError = 'Only images and GIFs are allowed to be uploaded';
-        cb(null, false);
-    }
-};
 
 // Multer configuration for uploading files
 const upload = multer({
