@@ -51,16 +51,31 @@ The first account with an administrator is called `XFkjjp0` but it can be modifi
 
 ## Features
 
-* Database Photo Storage
-* Login and register system with database
-* Admin Panel
-* Admin Account System
-* Account Manager
-* Captcha system
-* Security system
-* User protection
-* Preview the images
-* Zoom in and out on images
+* Middleware Setup: The application sets up middleware for various functionalities such as handling file uploads using Multer, sessions using express-session, etc.
+
+* Static File Serving: Static files like CSS files are served using express.static middleware for styling the web pages.
+
+* Session Management: Sessions are managed using express-session middleware. User session data includes information such as username, login status, and isAdmin flag.
+
+* User Authentication: User registration and login functionality are implemented using bcrypt for password hashing and validation.
+
+* Photo Upload: Users can upload photos, and the uploaded photo information is stored in a database. Multer middleware is used for handling file uploads.
+
+* Database Operations: SQLite database is used for storing user and photo information. Database operations are performed using SQLite queries.
+
+* Error Handling: Error pages are rendered when errors occur during processing requests.
+
+* Admin Panel: There's an admin panel accessible only to admin users. Admins can view and manage photos, search for photos by ID, view user details, and delete photos.
+
+* User Management: Admins can view user details and manage users, such as viewing user information and deleting users.
+
+* Logout: Users can log out of their sessions, and session data is cleared.
+
+* Active Users: The application keeps track of active users using a Map data structure.
+
+* Support Links: Support links are provided for GitHub repository and bug reporting.
+
+* Server Start: The server is started, and console logs provide information about server URLs and support links.
 
 # PhotoVoyage-languages App
 
