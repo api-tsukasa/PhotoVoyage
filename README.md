@@ -83,6 +83,15 @@ It is an app developed by the sstudios team with the help of some members of pho
 
 Repository: https://github.com/PhotoVoyage/PhotoVoyage-languages
 
+# Discord integration
+
+The photoVoyage open source platform has official discord integration and everything to do with discord will be in the `.env` file.
+
+```env
+    DISCORD_WEBHOOK_URL=YOUR_WEBHOOK_WEB_URL_OF_DISCORD
+    NOTIFICATIONS_ENABLED=false
+```
+
 # Sponsors
 
 Thank you very much for supporting us in this project ⭐
