@@ -88,8 +88,11 @@ Repository: https://github.com/PhotoVoyage/PhotoVoyage-languages
 The photoVoyage open source platform has official discord integration and everything to do with discord will be in the `.env` file.
 
 ```env
-    DISCORD_WEBHOOK_URL=YOUR_WEBHOOK_WEB_URL_OF_DISCORD
-    NOTIFICATIONS_ENABLED=false
+DISCORD_NOTIFIER_WEBHOOK_URL=YOUR_WEBHOOK_WEB_URL_OF_DISCORD
+DISCORD_NOTIFICATIONS_ENABLED=false
+
+DISCORD_LOGGER_WEBHOOK_URL=YOUR_WEBHOOK_WEB_URL_OF_DISCORD
+DISCORD_LOGS_ENABLED=false
 ```
 
 # Sponsors
