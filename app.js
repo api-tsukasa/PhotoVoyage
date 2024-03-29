@@ -14,11 +14,13 @@ const { isAdmin } = require('./tools/adminUtils');
 const { configureCookieParser, setLoggedInUserCookie } = require('./tools/cookieHandler');
 const fileFilter = require('./tools/fileFilter');
 const { sendDiscordNotification, setNotifications } = require('./services/discordNotifier');
+const { logMiddleware } = require('./services/DiscordLogger');
 const activeUsers = new Map();
 
 const app = express();
 const port = 3000;
 configureCookieParser(app);
+app.use(logMiddleware);
 
 app.use(session({
     secret: 'secret-key',
