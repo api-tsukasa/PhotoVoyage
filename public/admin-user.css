@@ -52,12 +52,12 @@ ul {
 }
 
 .user-item {
-    opacity: 0; /* Establece la opacidad inicial en 0 */
+    opacity: 0;
     transition: opacity 0.5s ease;
 }
 
 .user-item.show {
-    opacity: 1; /* Cambia la opacidad a 1 para mostrar gradualmente */
+    opacity: 1;
 }
 
 .menu-toggle {
