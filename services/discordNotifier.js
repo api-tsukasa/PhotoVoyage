@@ -1,11 +1,12 @@
+
 const axios = require('axios');
 require('dotenv').config(); // Load environment variables from .env
 
 // Variable for storing the status of notifications, defaulting to false if not specified in .env
-let notificationsEnabled = process.env.NOTIFICATIONS_ENABLED === 'true';
+let notificationsEnabled = process.env.DISCORD_NOTIFICATIONS_ENABLED === 'true';
 
 // Your Discord Webhook
-const discordWebhookURL = process.env.DISCORD_WEBHOOK_URL;
+const discordWebhookURL = process.env.DISCORD_NOTIFIER_WEBHOOK_URL;
 
 // Function to enable or disable notifications
 function setNotifications(enabled) {
