@@ -5,10 +5,12 @@ const webhookURL = process.env.DISCORD_LOGGER_WEBHOOK_URL;
 const logsEnabled = process.env.DISCORD_LOGS_ENABLED === 'true';
 const interval = parseInt(process.env.DISCORD_LOG_INTERVAL) || 5000;
 
+let lastMessageId = null;
+
 async function sendDiscordLog(message) {
     if (logsEnabled) {
         try {
-            await axios.post(webhookURL, {
+            const response = await axios.post(webhookURL, {
                 embeds: [
                     {
                         title: "Log Message",
@@ -28,8 +30,34 @@ async function sendDiscordLog(message) {
                     }
                 ]
             });
+
+            if (lastMessageId) {
+                // If there's a previous message, edit it with the new log
+                await axios.patch(`${webhookURL}/messages/${lastMessageId}`, {
+                    embeds: [
+                        {
+                            title: "Log Message",
+                            description: message.description,
+                            color: 3447003,
+                            fields: [
+                                {
+                                    name: "Event",
+                                    value: message.event,
+                                    inline: true
+                                },
+                                {
+                                    name: "Timestamp",
+                                    value: message.timestamp
+                                }
+                            ]
+                        }
+                    ]
+                });
+            } else {
+                lastMessageId = response.data.id;
+            }
         } catch (error) {
-            console.error('Error sending the logs to Discord:', error);
+            console.error('Error sending or editing the log message on Discord:', error);
         }
     }
 }
