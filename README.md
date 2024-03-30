@@ -75,6 +75,8 @@ The first account with an administrator is called `XFkjjp0` but it can be modifi
 
 * Support Links: Support links are provided for GitHub repository and bug reporting.
 
+* Discord integration: has discord integration through web hook that you can configure in the `.env` file.
+
 * Server Start: The server is started, and console logs provide information about server URLs and support links.
 
 # PhotoVoyage-languages App
