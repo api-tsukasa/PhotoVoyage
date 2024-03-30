@@ -5,69 +5,73 @@ const webhookURL = process.env.DISCORD_LOGGER_WEBHOOK_URL;
 const logsEnabled = process.env.DISCORD_LOGS_ENABLED === 'true';
 const interval = parseInt(process.env.DISCORD_LOG_INTERVAL) || 5000;
 
-async function sendDiscordLog(messages) {
+async function sendDiscordLog(message) {
     if (logsEnabled) {
         try {
-            for (const message of messages) {
-                await axios.post(webhookURL, {
-                    embeds: [
-                        {
-                            title: "Log Message",
-                            description: message.description,
-                            color: 3447003,
-                            fields: [
-                                {
-                                    name: "Request Method",
-                                    value: message.method,
-                                    inline: true
-                                },
-                                {
-                                    name: "Request URL",
-                                    value: message.url,
-                                    inline: true
-                                },
-                                {
-                                    name: "Timestamp",
-                                    value: message.timestamp
-                                }
-                            ]
-                        }
-                    ]
-                });
-                await new Promise(resolve => setTimeout(resolve, interval));
-            }
+            await axios.post(webhookURL, {
+                embeds: [
+                    {
+                        title: "Log Message",
+                        description: message.description,
+                        color: 3447003,
+                        fields: [
+                            {
+                                name: "Event",
+                                value: message.event,
+                                inline: true
+                            },
+                            {
+                                name: "Timestamp",
+                                value: message.timestamp
+                            }
+                        ]
+                    }
+                ]
+            });
         } catch (error) {
             console.error('Error sending the logs to Discord:', error);
         }
-    } else {
     }
 }
-
-const logQueue = [];
 
 function logMiddleware(req, res, next) {
     const timestamp = new Date().toISOString();
-    const logMessage = {
-        description: `[${timestamp}] ${req.method} ${req.url}`,
-        method: req.method,
-        url: req.url,
-        timestamp: timestamp
-    };
+    let logMessage = null;
 
-    logQueue.push(logMessage);
+    // Determine the event type based on the request path
+    if (req.url === '/register' && req.method === 'POST' && req.body && req.body.username) {
+        logMessage = {
+            event: "User Registration",
+            description: `[${timestamp}] New user registered: ${req.body.username}`,
+            timestamp: timestamp
+        };
+    } else if (req.url === '/login' && req.method === 'POST' && req.body && req.body.username) {
+        logMessage = {
+            event: "User Login",
+            description: `[${timestamp}] User logged in: ${req.body.username}`,
+            timestamp: timestamp
+        };
+    } else if (req.url === '/upload' && req.method === 'POST') {
+        logMessage = {
+            event: "Photo Upload",
+            description: `[${timestamp}] User uploaded a photo`,
+            timestamp: timestamp
+        };
+    } else if (req.url.startsWith('/admin/delete/') && req.method === 'POST') {
+        const photoId = req.url.split('/').pop();
+        logMessage = {
+            event: "Photo Deletion",
+            description: `[${timestamp}] User deleted photo with ID: ${photoId}`,
+            timestamp: timestamp
+        };
+    }
 
-    if (logQueue.length === 1) {
-        sendLogs();
+    // Send log if it's relevant
+    if (logMessage) {
+        sendDiscordLog(logMessage);
     }
 
     next();
-}
-
-async function sendLogs() {
-    if (logQueue.length > 0) {
-        const logsToSend = logQueue.splice(0, logQueue.length);
-        await sendDiscordLog(logsToSend);
-    }
 }
 
 module.exports = {
