@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhotoVoyage - Page Error</title>
+    <title>photoVoyager - page error</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="/public/error-page.css">
     <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
@@ -27,11 +27,12 @@
         </div>
     </div>
     <script>
+    // Esta parte es opcional, solo si quieres que la animación se reproduzca cuando se cargue la página
         window.addEventListener('load', () => {
             const text = document.getElementById('error-text');
-            text.style.animation = 'none';
+            text.style.animation = 'none'; // Se detiene la animación
             text.offsetHeight; // Se fuerza un reflow
-            text.style.animation = 'typing 3s steps(40, end)';
+            text.style.animation = 'typing 3s steps(40, end)'; // Se reinicia la animación
         });
         
         const tooltip = document.getElementById('tooltip');
