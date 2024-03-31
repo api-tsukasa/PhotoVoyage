@@ -49,6 +49,17 @@ The first account with an administrator is called `XFkjjp0` but it can be modifi
     <admin>account name</admin>
 ```
 
+# mods.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- here to make a user mod you have to put this "<mod>user123</mod>" -->
+
+<mods>
+    <mod>XFkjjp34</mod>
+</mods>
+```
+
 ## Features
 
 * Middleware Setup: The application sets up middleware for various functionalities such as handling file uploads using Multer, sessions using express-session, etc.
@@ -115,3 +126,4 @@ Thank you very much for helping in the project ❤
 <a href="https://github.com/MasterpaintSu"><img src="https://avatars.githubusercontent.com/u/159675013?v=4" height="128" width="128" /></a>
 <a href="https://github.com/SantiagolxxGG"><img src="https://avatars.githubusercontent.com/u/149891004?v=4" height="128" width="128" /></a>
 <a href="https://github.com/photovoyagehelp"><img src="https://avatars.githubusercontent.com/u/164266627?v=4" height="128" width="128" /></a>
+<a href="https://github.com/skylandnewmc"><img src="https://avatars.githubusercontent.com/u/146138091?v=4" height="128" width="128" /></a>
