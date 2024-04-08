@@ -1,46 +1,104 @@
-// PhotoVoyage
-// Code developed by the photoVoyage team and collaborators
-// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/user-details.css">
-    <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
     <title>User Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/public/user-details.css">
 </head>
-<body>
-    <div class="user-details">
-        <h1>User Details</h1>
-        <div class="details-container">
-            <div class="detail-item">
-                <span class="detail-label">Username:</span>
-                <span class="detail-value"><%= user.username %></span>
+
+<body class="bg-white min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full mx-auto">
+        <div class="p-6 bg-white rounded-lg shadow-xl">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">User Details</h1>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                    <span class="font-semibold text-gray-600">Username:</span>
+                    <span class="text-gray-800"><%= user.username %></span>
+                </div>
+                <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                    <span class="font-semibold text-gray-600">Email:</span>
+                    <span class="text-gray-800"><%= user.email %></span>
+                </div>
+                <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                    <span class="font-semibold text-gray-600">Account ID:</span>
+                    <span class="text-gray-800"><%= userId %></span>
+                </div>
+                <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                    <span class="font-semibold text-gray-600">Account Created At:</span>
+                    <span class="text-gray-800"><%= user.created_at %></span>
+                </div>
             </div>
-            <div class="detail-item">
-                <span class="detail-label">Email:</span>
-                <span class="detail-value"><%= user.email %></span>
-            </div>
-            <div class="detail-item">
-                <span class="detail-label">Account ID:</span>
-                <span class="detail-value"><%= userId %></span>
-            </div>
-            <div class="detail-item">
-                <span class="detail-label">Account Created At:</span>
-                <span class="detail-value"><%= user.created_at %></span>
-            </div>          
-            <!-- Add more user details here as needed -->
+            <button id="export-btn" class="mt-4 bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded w-full transition duration-300 transform hover:scale-105">Export to Excel</button>
+            <button class="mt-8 bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded w-full transition duration-300 transform hover:scale-105" onclick="goToAdminPanel()">Back to Admin Panel</button>
         </div>
-        <button class="btn-back" onclick="goToAdminPanel()">Back to Admin Panel</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.2/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script>
+        document.getElementById('export-btn').addEventListener('click', function() {
+            let wb;
+            try {
+                const fileReader = new FileReader();
+                fileReader.onload = function(event) {
+                    const data = event.target.result;
+                    wb = XLSX.read(data, { type: 'binary' });
+    
+
+                    const wsName = wb.SheetNames[0];
+                    const ws = wb.Sheets[wsName];
+    
+
+                    const jsonData = XLSX.utils.sheet_to_json(ws, { header: 1 });
+    
+
+                    let rowIndex = jsonData.length;
+
+                    jsonData.push(['<%= user.username %>', '<%= user.email %>', '<%= userId %>', '<%= user.created_at %>']);
+    
+                    jsonData.forEach((row, i) => {
+                        row.forEach((cell, j) => {
+                            ws[XLSX.utils.encode_cell({ r: i, c: j })] = { v: cell };
+                        });
+                    });
+    
+                    ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: rowIndex, c: 3 } });
+    
+                    const newWb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(newWb, ws, wsName);
+    
+                    const newWbout = XLSX.write(newWb, { bookType: 'xlsx', type: 'binary' });
+                    saveAs(new Blob([s2ab(newWbout)], { type: 'application/octet-stream' }), 'user-details.xlsx');
+                };
+                fileReader.readAsBinaryString(document.getElementById('fileInput').files[0]);
+            } catch (e) {
+                console.error('Error:', e);
+                wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.json_to_sheet([
+                    { Username: '<%= user.username %>', Email: '<%= user.email %>', 'Account ID': '<%= userId %>', 'Account Created At': '<%= user.created_at %>' }
+                ]);
+                XLSX.utils.book_append_sheet(wb, ws, 'User Details');
+                const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+                saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'user-details.xlsx');
+            }
+        });
+    
+        function s2ab(s) {
+            const buf = new ArrayBuffer(s.length);
+            const view = new Uint8Array(buf);
+            for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+    
         function goToAdminPanel() {
             window.location.href = "/admin-users";
         }
-    </script>
+    </script>    
 </body>
+
 </html>
