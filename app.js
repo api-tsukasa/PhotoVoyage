@@ -5,8 +5,11 @@
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const sqlite3 = require('sqlite3');
+const { performance } = require('perf_hooks');
 
 const generateCaptcha = require('./services/captchaS');
 const { db, userDB } = require('./services/database');
@@ -286,6 +289,72 @@ function requireAdmin(req, res, next) {
         res.status(403).redirect('/error');
     }
 }
+
+// Route to analyze the database folder
+app.get('/analyze-database-folder', (req, res) => {
+    const folderPath = 'Database'; // Database folder path
+    let results = [];
+    const startTime = performance.now();
+
+    // Get the list of files in the folder
+    fs.readdir(folderPath, (err, files) => {
+        if (err) {
+            res.status(500).send('Error reading the database folder');
+            return;
+        }
+
+        // Iterate over each file and analyze it
+        files.forEach((file) => {
+            const dbPath = path.join(folderPath, file);
+            const dbSize = fs.statSync(dbPath).size;
+
+            console.log(`Analyzing file: ${file}, Size: ${dbSize} bytes`);
+
+            const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
+                if (err) {
+                    console.log(`Error opening the database ${file}`);
+                    results.push({ filename: file, size: dbSize, corrupt: true });
+                    checkIfFinished(files.length);
+                    return;
+                }
+
+                // Execute a query to check for corrupt files
+                db.get('PRAGMA integrity_check;', (err, row) => {
+                    if (err) {
+                        console.log(`Error checking the integrity of the database ${file}`);
+                        results.push({ filename: file, size: dbSize, corrupt: true });
+                    } else {
+                        const isCorrupt = row.integrity_check === 'ok' ? false : true;
+                        if (isCorrupt) {
+                            console.log(`Corrupt file found: ${file}`);
+                        } else {
+                            console.log(`File analyzed successfully: ${file}`);
+                        }
+                        results.push({ filename: file, size: dbSize, corrupt: isCorrupt });
+                    }
+                    checkIfFinished(files.length, startTime);
+                });
+
+                // Close the database after executing the query
+                db.close();
+            });
+        });
+    });
+
+    function checkIfFinished(totalFiles, startTime) {
+        if (results.length === totalFiles) {
+            const endTime = performance.now();
+            const elapsedTime = endTime - startTime;
+            console.log(`Total analysis time: ${elapsedTime} milliseconds`);
+
+            console.log('--- Analysis Results ---');
+            results.forEach((result) => {
+                console.log(`File: ${result.filename}, Size: ${result.size} bytes, Corrupt: ${result.corrupt ? 'Yes' : 'No'}`);
+            });
+            res.json({ results, elapsedTime });
+        }
+    }
+});
 
 app.get('/tools', (req, res) => {
     res.render('tools');
