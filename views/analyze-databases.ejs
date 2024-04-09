@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+<!--Header-->
+<nav id="header" class="fixed w-full z-10 top-0">
+
+    <div id="progress" class="h-1 z-20 top-0" style="background:linear-gradient(to right, #4dc0b5 var(--scroll), transparent 0);"></div>
+
+    <div class="w-full md:max-w-4xl mx-auto flex flex-wrap items-center justify-between mt-0 py-3">
+
+        <div class="pl-4">
+            <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold text-xl" href="#">Database Analysis</a>
+        </div>
+
+    </div>
+</nav>
+
+<!--Container-->
+<div class="container w-full md:max-w-4xl mx-auto pt-20">
+
+    <div class="w-full px-4 md:px-6 text-xl text-gray-800 leading-normal">
+
+        <!--Console Content-->
+        <div class="flex flex-wrap justify-center bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-4">
+
+            <div class="w-full">
+                <h1 class="text-3xl font-bold mb-2">Database Analysis Results</h1>
+            </div>
+
+            <div class="w-full">
+                <table class="table-auto w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2">Database</th>
+                            <th class="px-4 py-2">Size (bytes)</th>
+                            <th class="px-4 py-2">Size (KB)</th>
+                            <th class="px-4 py-2">Size (MB)</th>
+                            <th class="px-4 py-2">Record Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% results.forEach(result => { %>
+                            <tr>
+                                <td class="border px-4 py-2"><%= result.dbPath %></td>
+                                <td class="border px-4 py-2"><%= result.fileSizeInBytes %></td>
+                                <td class="border px-4 py-2"><%= result.fileSizeInKiloBytes !== undefined ? result.fileSizeInKiloBytes.toFixed(2) : '-' %></td>
+                                <td class="border px-4 py-2"><%= result.fileSizeInMegaBytes !== undefined ? result.fileSizeInMegaBytes.toFixed(2) : '-' %></td>
+                                <td class="border px-4 py-2"><%= result.recordCount %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="w-full mt-4">
+                <p class="text-gray-700">Total Analysis Time: <%= elapsedTime %> milliseconds</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
