@@ -2,49 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>photoVoyager - page error</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="/public/error-page.css">
-    <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
+    <title>Photo Gallery - Error-Page</title>
+    <!-- Including Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/Components/buttons.css">
+    <style>
+        /* Add additional styles here if needed */
+        .emoji:hover {
+            animation: rotate 1s linear infinite;
+        }
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="content">
-            <h1 id="error-code">ERROR</h1>
-            <p id="error-text">Oops! there seems to be an error</p>
-            <a href="/" class="btn">Back to home page</a>
-            <div id="tooltip" class="tooltip">Oops! here are the types of possible errors
-                <h4>1) Image not selected</h4>
-                <h4>2) invalid image format</h4>
-                <h4>3) you do not have permission to go to this page</h4>
-                <h4>4) Invalid username or password</h4>
-                <h4>5) Username already in use</h4>
-                <h4>6) Connection error</h4>
-                </h4>
+<body class="bg-white font-sans leading-normal tracking-normal">
+
+    <!-- Content of the page -->
+    <div class="min-h-screen flex flex-col justify-center items-center">
+        <div class="max-w-xl w-full bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeInDown">
+            <div class="p-8">
+                <svg class="mx-auto h-24 w-24 text-red-500 emoji" fill="none" viewBox="0 0 24 24" stroke="currentColor" onclick="changeEmojiColor()">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+                <h1 class="text-3xl text-center font-semibold text-gray-800 mb-4">Oops! Something went wrong</h1>
+                <p class="text-gray-600 text-center mb-8">Sorry, it seems like an error has occurred. Please try again later.</p>
+                <p class="text-gray-600 text-center mb-8">You can also contact our support team at <a href="mailto:photovoyagehelp@gmail.com" class="text-blue-500 hover:text-blue-600">photovoyagehelp@gmail.com</a>.</p>
+                <div class="text-center">
+                    <a href="/" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded inline-flex items-center transition duration-300 transform hover:scale-105">
+                        <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.414 5.414a2 2 0 012.828 0L12 7.586l1.758-1.758a2 2 0 012.828 2.828L14.828 12l1.758 1.758a2 2 0 01-2.828 2.828L12 14.828l-1.758 1.758a2 2 0 01-2.828-2.828L9.172 12 7.414 10.242a2 2 0 010-2.828z" fill="currentColor"></path>
+                        </svg>
+                        <span>Go back to the homepage</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+
     <script>
-    // Esta parte es opcional, solo si quieres que la animación se reproduzca cuando se cargue la página
-        window.addEventListener('load', () => {
-            const text = document.getElementById('error-text');
-            text.style.animation = 'none'; // Se detiene la animación
-            text.offsetHeight; // Se fuerza un reflow
-            text.style.animation = 'typing 3s steps(40, end)'; // Se reinicia la animación
-        });
-        
-        const tooltip = document.getElementById('tooltip');
-        const errorCode = document.getElementById('error-code');
-        
-        errorCode.addEventListener('mouseover', () => {
-            tooltip.style.display = 'block';
-        });
-        
-        errorCode.addEventListener('mouseout', () => {
-            tooltip.style.display = 'none';
-        });
-        </script>
+        function changeEmojiColor() {
+            const emoji = document.querySelector('.emoji');
+            emoji.classList.toggle('text-red-500');
+            emoji.classList.toggle('text-blue-500');
+        }
+    </script>
+
 </body>
 </html>

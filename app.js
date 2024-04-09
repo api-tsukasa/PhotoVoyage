@@ -45,6 +45,12 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+// Button component
+app.get('/public/Components/buttons.css', function(req, res) {
+    res.setHeader('Content-Type', 'text/css');
+    res.sendFile(__dirname + '/public/Components/buttons.css');
+});
+
 // CSS configuration
 app.get('/public/styles.css', function(req, res) {
     res.setHeader('Content-Type', 'text/css');
@@ -73,12 +79,6 @@ app.get('/public/login.css', function(req, res) {
 app.get('/public/admin-user.css', function(req, res) {
     res.setHeader('Content-Type', 'text/css');
     res.sendFile(__dirname + '/public/admin-user.css');
-});
-
-// user-details.css
-app.get('/public/user-details.css', function(req, res) {
-    res.setHeader('Content-Type', 'text/css');
-    res.sendFile(__dirname + '/public/user-details.css');
 });
 
 // active-users.css
