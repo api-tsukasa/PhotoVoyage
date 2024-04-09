@@ -290,68 +290,60 @@ function requireAdmin(req, res, next) {
     }
 }
 
-// Route to analyze the database folder
-app.get('/analyze-database-folder', (req, res) => {
-    const folderPath = 'Database'; // Database folder path
-    let results = [];
+// Path to analyze the databases
+app.get('/analyze-databases', requireAdmin, (req, res) => {
+    const dbFolder = 'Database'; // Ruta de la carpeta que contiene las bases de datos
+    const dbPaths = [`${dbFolder}/photos.db`, `${dbFolder}/users.db`]; // Rutas completas a las bases de datos
     const startTime = performance.now();
+    const results = [];
 
-    // Get the list of files in the folder
-    fs.readdir(folderPath, (err, files) => {
-        if (err) {
-            res.status(500).send('Error reading the database folder');
-            return;
-        }
+    dbPaths.forEach(dbPath => {
+        const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
+            if (err) {
+                results.push({ dbPath: dbPath, error: 'Error opening the database' });
+                checkIfFinished(dbPaths.length);
+                return;
+            }
 
-        // Iterate over each file and analyze it
-        files.forEach((file) => {
-            const dbPath = path.join(folderPath, file);
-            const dbSize = fs.statSync(dbPath).size;
+            // Get the size of the database file
+            const stats = fs.statSync(dbPath);
+            const fileSizeInBytes = stats.size;
+            const fileSizeInKiloBytes = fileSizeInBytes / 1024;
+            const fileSizeInMegaBytes = fileSizeInKiloBytes / 1024;
 
-            console.log(`Analyzing file: ${file}, Size: ${dbSize} bytes`);
+            // Count the number of records in the database
+            let query;
+            if (dbPath === `${dbFolder}/photos.db`) {
+                query = 'SELECT COUNT(*) AS count FROM photos';
+            } else if (dbPath === `${dbFolder}/users.db`) {
+                query = 'SELECT COUNT(*) AS count FROM users';
+            }
 
-            const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
+            db.get(query, (err, row) => {
                 if (err) {
-                    console.log(`Error opening the database ${file}`);
-                    results.push({ filename: file, size: dbSize, corrupt: true });
-                    checkIfFinished(files.length);
+                    results.push({ dbPath: dbPath, error: 'Error counting records in the database' });
+                    checkIfFinished(dbPaths.length);
                     return;
                 }
+                
+                const recordCount = row.count;
 
-                // Execute a query to check for corrupt files
-                db.get('PRAGMA integrity_check;', (err, row) => {
-                    if (err) {
-                        console.log(`Error checking the integrity of the database ${file}`);
-                        results.push({ filename: file, size: dbSize, corrupt: true });
-                    } else {
-                        const isCorrupt = row.integrity_check === 'ok' ? false : true;
-                        if (isCorrupt) {
-                            console.log(`Corrupt file found: ${file}`);
-                        } else {
-                            console.log(`File analyzed successfully: ${file}`);
-                        }
-                        results.push({ filename: file, size: dbSize, corrupt: isCorrupt });
-                    }
-                    checkIfFinished(files.length, startTime);
-                });
-
-                // Close the database after executing the query
-                db.close();
+                results.push({ dbPath: dbPath, fileSizeInBytes: fileSizeInBytes, fileSizeInKiloBytes: fileSizeInKiloBytes, fileSizeInMegaBytes: fileSizeInMegaBytes, recordCount: recordCount });
+                checkIfFinished(dbPaths.length);
             });
+
+            // Close the database connection after executing the query
+            db.close();
         });
     });
 
-    function checkIfFinished(totalFiles, startTime) {
-        if (results.length === totalFiles) {
+    function checkIfFinished(totalDatabases) {
+        if (results.length === totalDatabases) {
             const endTime = performance.now();
             const elapsedTime = endTime - startTime;
-            console.log(`Total analysis time: ${elapsedTime} milliseconds`);
 
-            console.log('--- Analysis Results ---');
-            results.forEach((result) => {
-                console.log(`File: ${result.filename}, Size: ${result.size} bytes, Corrupt: ${result.corrupt ? 'Yes' : 'No'}`);
-            });
-            res.json({ results, elapsedTime });
+            // Render the EJS template with the analysis results
+            res.render('analyze-databases', { results, elapsedTime });
         }
     }
 });
