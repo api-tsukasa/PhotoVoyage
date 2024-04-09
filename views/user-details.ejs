@@ -9,9 +9,37 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
     <link rel="stylesheet" href="/public/Components/buttons.css">
+    <style>
+        body {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            z-index: -10;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+            background-size: 6rem 4rem;
+        }
+
+        .bg-radial {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            background: radial-gradient(circle 500px at 50% 200px, #C9EBFF, transparent);
+        }
+    </style>
 </head>
 
-<body class="bg-white min-h-screen flex items-center justify-center">
+<body class="bg-white min-h-screen">
+    <div class="bg-pattern">
+        <div class="bg-radial"></div>
+    </div>
     <div class="max-w-md w-full mx-auto">
         <div class="p-6 bg-white rounded-lg shadow-xl">
             <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">User Details</h1>
@@ -48,30 +76,30 @@
                 fileReader.onload = function(event) {
                     const data = event.target.result;
                     wb = XLSX.read(data, { type: 'binary' });
-    
+
 
                     const wsName = wb.SheetNames[0];
                     const ws = wb.Sheets[wsName];
-    
+
 
                     const jsonData = XLSX.utils.sheet_to_json(ws, { header: 1 });
-    
+
 
                     let rowIndex = jsonData.length;
 
                     jsonData.push(['<%= user.username %>', '<%= user.email %>', '<%= userId %>', '<%= user.created_at %>']);
-    
+
                     jsonData.forEach((row, i) => {
                         row.forEach((cell, j) => {
                             ws[XLSX.utils.encode_cell({ r: i, c: j })] = { v: cell };
                         });
                     });
-    
+
                     ws['!ref'] = XLSX.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: rowIndex, c: 3 } });
-    
+
                     const newWb = XLSX.utils.book_new();
                     XLSX.utils.book_append_sheet(newWb, ws, wsName);
-    
+
                     const newWbout = XLSX.write(newWb, { bookType: 'xlsx', type: 'binary' });
                     saveAs(new Blob([s2ab(newWbout)], { type: 'application/octet-stream' }), 'user-details.xlsx');
                 };
@@ -87,18 +115,18 @@
                 saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), 'user-details.xlsx');
             }
         });
-    
+
         function s2ab(s) {
             const buf = new ArrayBuffer(s.length);
             const view = new Uint8Array(buf);
             for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
             return buf;
         }
-    
+
         function goToAdminPanel() {
             window.location.href = "/admin-users";
         }
-    </script>    
+    </script>
 </body>
 
 </html>
