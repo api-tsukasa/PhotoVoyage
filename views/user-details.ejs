@@ -33,6 +33,20 @@
             top: 0;
             background: radial-gradient(circle 500px at 50% 200px, #C9EBFF, transparent);
         }
+
+        .animate-fadeInDown {
+            animation: fadeInDown 1s ease;
+        }
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -41,7 +55,7 @@
         <div class="bg-radial"></div>
     </div>
     <div class="max-w-md w-full mx-auto">
-        <div class="p-6 bg-white rounded-lg shadow-xl">
+        <div id="userPage" class="p-6 bg-white rounded-lg shadow-xl">
             <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">User Details</h1>
             <div class="space-y-4">
                 <div class="flex justify-between items-center border-b border-gray-200 py-2">
@@ -69,6 +83,11 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.2/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script>
+        window.addEventListener('load', function() {
+            const userPage = document.getElementById('userPage');
+            userPage.classList.add('animate-fadeInDown');
+        });
+
         document.getElementById('export-btn').addEventListener('click', function() {
             let wb;
             try {
