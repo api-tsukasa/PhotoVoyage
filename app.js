@@ -420,4 +420,6 @@ app.listen(port, () => {
     console.log(`Support:`)
     console.log(`Github: https://github.com/api-tsukasa/PhotoVoyage/`)
     console.log(`Report bugs: https://github.com/api-tsukasa/PhotoVoyage/issues`)
+    console.log()
+    console.log(`-----------------------INFO DATABASE--------------------------`)
 });
