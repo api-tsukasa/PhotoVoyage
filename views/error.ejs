@@ -20,13 +20,27 @@
                 transform: rotate(360deg);
             }
         }
+        /* Animation for fadeInDown */
+        .animate-fadeInDown {
+            animation: fadeInDown 1s ease;
+        }
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body class="bg-white font-sans leading-normal tracking-normal">
 
     <!-- Content of the page -->
     <div class="min-h-screen flex flex-col justify-center items-center">
-        <div class="max-w-xl w-full bg-white rounded-lg shadow-lg overflow-hidden animate__animated animate__fadeInDown">
+        <div id="errorPage" class="max-w-xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="p-8">
                 <svg class="mx-auto h-24 w-24 text-red-500 emoji" fill="none" viewBox="0 0 24 24" stroke="currentColor" onclick="changeEmojiColor()">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"></path>
@@ -52,6 +66,12 @@
             emoji.classList.toggle('text-red-500');
             emoji.classList.toggle('text-blue-500');
         }
+
+        // Add animation when page loads
+        window.addEventListener('load', function() {
+            const errorPage = document.getElementById('errorPage');
+            errorPage.classList.add('animate-fadeInDown');
+        });
     </script>
 
 </body>
