@@ -1,4 +1,6 @@
 node_modules
+uploads
+backups
 package-lock.json
 photos.db
 users.db
