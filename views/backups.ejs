@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - Backups</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        function confirmBackup() {
+            if (confirm("Are you sure you want to create a backup? This may consume a significant amount of storage space on the hosting system.")) {
+                window.location.href = "/admin/backups/create";
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-6">Backup Copies</h1>
+        <button onclick="confirmBackup()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create Backup</button>
+        <% if (backupsExist) { %>
+            <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                <% backups.forEach(backup => { %>
+                    <li class="bg-white shadow-md rounded-lg p-4">
+                        <a href="/admin/backups/create<%= backup %>" class="text-blue-500 hover:underline"><%= backup %></a>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-6" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">No backups available.</span>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
