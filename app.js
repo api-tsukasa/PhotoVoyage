@@ -414,7 +414,7 @@ app.get('/admin/search', requireLogin, (req, res) => {
 });
 
 // Path to display the user administration page
-app.get('/admin-users', requireAdmin, (req, res) => {
+app.get('/admin/users', requireAdmin, (req, res) => {
     userDB.all('SELECT * FROM users', (err, rows) => {
         if (err) {
             res.status(500).redirect('/error');
@@ -424,7 +424,7 @@ app.get('/admin-users', requireAdmin, (req, res) => {
 });
 
 // Path to get a user's information by ID and display it on a separate page
-app.get('/admin-users/:id', requireAdmin, (req, res) => {
+app.get('/admin/users/:id', requireAdmin, (req, res) => {
     const userId = req.params.id;
     userDB.get('SELECT * FROM users WHERE id = ?', userId, (err, row) => {
         if (err || !row) {
