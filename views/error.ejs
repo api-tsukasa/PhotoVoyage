@@ -34,10 +34,35 @@
                 transform: translateY(0);
             }
         }
+        /* Background styles */
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            z-index: -10;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+            background-size: 6rem 4rem;
+        }
+        .bg-radial {
+            position: absolute;
+            bottom: -50px; /* Adjusted position */
+            left: 0;
+            right: 0;
+            top: 0;
+            background: radial-gradient(circle 700px at 50% 400px, #C9EBFF, transparent); /* Adjusted size */
+        }
+        /* Hide vertical scrollbar */
+        body {
+            overflow-y: hidden;
+        }
     </style>
 </head>
-<body class="bg-white font-sans leading-normal tracking-normal">
-
+<body class="bg-white font-sans leading-normal tracking-normal relative">
+    <!-- Background -->
+    <div class="bg-pattern">
+        <div class="bg-radial"></div>
+    </div>
     <!-- Content of the page -->
     <div class="min-h-screen flex flex-col justify-center items-center">
         <div id="errorPage" class="max-w-xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
