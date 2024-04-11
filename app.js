@@ -290,10 +290,56 @@ function requireAdmin(req, res, next) {
     }
 }
 
+const backupFolderPath = 'backups';
+
+app.get('/admin/backups/create', requireAdmin, async (req, res) => {
+    try {
+        const timestamp = new Date().toISOString().replace(/:/g, '-');
+        const backupFolder = path.join(backupFolderPath, timestamp);
+        
+        if (!fs.existsSync(backupFolder)) {
+            fs.mkdirSync(backupFolder, { recursive: true });
+        }
+
+        const sourceFiles = fs.readdirSync('Database');
+        const filesCount = sourceFiles.length;
+
+        fs.copyFileSync('Database/photos.db', path.join(backupFolder, 'photos.db'));
+        fs.copyFileSync('Database/users.db', path.join(backupFolder, 'users.db'));
+
+        const backupDate = new Date().toLocaleString();
+        
+        const filesDownloaded = filesCount;
+
+        const endTime = new Date();
+        const startTime = req.startTime;
+        const timeTaken = (endTime - startTime) / 1000 + ' seconds';
+
+        // Mensaje en la consola
+        console.log(`Backup successful. Files copied:`);
+        sourceFiles.forEach(file => {
+            console.log(file);
+        });
+
+        res.render('backup', {backupDate, filesDownloaded, timeTaken, backupFolder });
+    } catch (err) {
+        console.error('Backup failed:', err);
+        res.status(500).render('backup', { message: 'Backup failed.' });
+    }
+});
+
+app.get('/admin/backups', requireAdmin, (req, res) => {
+    const backupsFolder = 'backups';
+    const backupsExist = fs.existsSync(backupsFolder);
+    const backups = backupsExist ? fs.readdirSync(backupsFolder).filter(file => fs.statSync(path.join(backupsFolder, file)).isDirectory()) : [];
+
+    res.render('backups', { backups, backupsExist });
+});
+
 // Path to analyze the databases
 app.get('/analyze-databases', requireAdmin, (req, res) => {
-    const dbFolder = 'Database'; // Ruta de la carpeta que contiene las bases de datos
-    const dbPaths = [`${dbFolder}/photos.db`, `${dbFolder}/users.db`]; // Rutas completas a las bases de datos
+    const dbFolder = 'Database';
+    const dbPaths = [`${dbFolder}/photos.db`, `${dbFolder}/users.db`];
     const startTime = performance.now();
     const results = [];
 
