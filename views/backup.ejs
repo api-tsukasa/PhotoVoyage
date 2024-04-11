@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-top: 4rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-back {
+            display: inline-block;
+            background-color: #2563EB;
+            color: #FFFFFF;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #1D4ED8;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="container">
+        <div class="card">
+            <h1 class="text-3xl font-semibold text-gray-800 mb-6">Backup Status</h1>
+            <div class="text-gray-700 text-base mb-6">
+                <p>Your backup has been successfully created.</p>
+                <p>Backup Date: <strong><%= backupDate %></strong></p>
+                <p>Backup Location: <strong><%= backupFolder %></strong></p>
+                <p>Files Downloaded: <strong><%= filesDownloaded %></strong></p>
+                <p>Time Taken: <strong><%= timeTaken %></strong></p>
+            </div>
+            <a href="/admin/backups" class="btn-back">Back to Backup List</a>
+        </div>
+    </div>
+</body>
+
+</html>
