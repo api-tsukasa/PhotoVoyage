@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/admin-user.css">
     <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
-    <title>Admin Users</title>
+    <title>Photo Gallery - users</title>
 </head>
 <body>
     <div class="menu-toggle" id="menuToggle">
@@ -59,7 +59,7 @@
                         return response.text();
                     })
                     .then(data => {
-                        window.location.href = `/admin-users/${userId}`;
+                        window.location.href = `/admin/users/${userId}`;
                     })
                     .catch(error => console.error('Error:', error));
             });
