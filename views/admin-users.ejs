@@ -51,7 +51,7 @@
             link.addEventListener('click', function(event) {
                 event.preventDefault();
                 const userId = this.getAttribute('data-id');
-                fetch(`/admin-users/${userId}`)
+                fetch(`/admin/users/${userId}`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
