@@ -1,31 +1,55 @@
-// PhotoVoyage
-// Code developed by the photoVoyage team and collaborators
-// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery - Login</title>
+    <link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/164266627?v=4" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/public/login.css">
-    <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/public/Components/buttons.css">
+    <style>
+        /* Additional styles for login page */
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            z-index: -10;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+            background-size: 6rem 4rem;
+        }
+        .bg-radial {
+            position: absolute;
+            bottom: -50px; /* Adjusted position */
+            left: 0;
+            right: 0;
+            top: 0;
+            background: radial-gradient(circle 700px at 50% 400px, #C9EBFF, transparent); /* Adjusted size */
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h2>Login</h2>
-        <% if (message) { %>
-            <p><%= message %></p>
-        <% } %>
-        <form action="/login" method="POST">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <br>
-            <button type="submit">Login</button>
-        </form>        
+<body class="bg-white font-sans leading-normal tracking-normal relative">
+    <!-- Background -->
+    <div class="bg-pattern">
+        <div class="bg-radial"></div>
+    </div>
+    <div class="min-h-screen flex flex-col justify-center items-center pt-0"> <!-- Cambiado de pt-24 a pt-[-24] -->
+        <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+            <h2 class="text-3xl text-center font-semibold text-gray-800 mb-6">Login</h2>
+            <% if (message) { %>
+                <p class="text-red-500 mb-4"><%= message %></p>
+            <% } %>
+            <form action="/login" method="POST">
+                <label for="username" class="block text-gray-700">Username:</label>
+                <input type="text" id="username" name="username" required class="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <label for="password" class="block text-gray-700 mt-4">Password:</label>
+                <input type="password" id="password" name="password" required class="form-input mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <button type="submit" class="w-full mt-6 bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600 focus:outline-none focus:border-teal-700 focus:ring focus:ring-teal-200 focus:ring-opacity-50">Login</button>
+            </form>
+            <h4 class="text-center text-gray-700">Don't have a sign in? <a href="/register" style="color: blue;">Register</a></h4>        
+        </div>
     </div>
 </body>
+
 </html>
