@@ -45,6 +45,12 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+// JavaScript configuration
+app.get('/public/js/home-script.js', function(req, res) {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.sendFile(__dirname + '/public/js/home-script.js');
+});
+
 // Button component
 app.get('/public/Components/buttons.css', function(req, res) {
     res.setHeader('Content-Type', 'text/css');
