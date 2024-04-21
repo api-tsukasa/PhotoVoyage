@@ -1,112 +1,103 @@
-// PhotoVoyage
-// Code developed by the photoVoyage team and collaborators
-// https://github.com/api-tsukasa/PhotoVoyage/graphs/contributors
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery - Register</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/Components/buttons.css">
+    <link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/164266627?v=4" type="image/x-icon">
     <style>
-        .custom-button {
-            background-color: #f05c54;
-            padding: 12px 24px;
-            font-size: 1.25rem;
-            font-weight: bold;
+        body {
+            overflow: hidden;
         }
 
-        .custom-button:hover {
-            background-color: #FF8C66;
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            z-index: -10;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, #f0f0f0 1px, transparent 1px), linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+            background-size: 6rem 4rem;
         }
-        #password-strength {
-            margin-top: 5px;
+        .bg-radial {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            top: 0;
+            background: radial-gradient(circle 700px at 50% 400px, #C9EBFF, transparent);
         }
-        #password-strength .progress {
-            margin-bottom: 5px;
-        }
-        #password-strength-bar {
-            height: 20px;
-            border-radius: 10px;
-        }
-        #password-strength-bar.level-1 {
-            background-color: #FF3838;
-        }
-        #password-strength-bar.level-2 {
-            background-color: #FF9F38;
-        }
-        #password-strength-bar.level-3 {
-            background-color: #FFD438;
-        }
-        #password-strength-bar.level-4 {
-            background-color: #5EFF38;
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
     </style>
 </head>
-<body>
-    <section class="section">
-        <div class="container">
-            <div class="columns is-centered">
-                <div class="column is-half">
-                    <div class="box">
-                        <h2 class="title is-2 has-text-centered">Register</h2>
-                        <% if (message) { %>
-                            <p class="notification is-info"><%= message %></p>
-                        <% } %>
-                        <form action="/register" method="POST">
-                            <div class="field">
-                                <label class="label" for="username">Username</label>
-                                <div class="control">
-                                    <input class="input" type="text" id="username" name="username" required>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label for="email" class="label">Email</label>
-                                <div class="control">
-                                    <input class="input" type="text" id="email" name="email" required>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label class="label" for="password">Password</label>
-                                <div class="control">
-                                    <input class="input" type="password" id="password" name="password" required>
-                                </div>
-                                <div class="control">
-                                    <button class="button is-primary toggle-password" type="button">Show Password</button>
-                                </div>
-                                <div id="password-strength">
-                                    <div class="progress">
-                                        <div id="password-strength-bar" class="progress-bar"></div>
-                                    </div>
-                                    <p id="password-strength-text" class="help"></p>
-                                </div>
-                                <p class="help">Tip: Use a strong password with a mix of letters, numbers, and symbols.</p>
-                            </div>
-                            <div class="field">
-                                <label class="label" for="captcha">Solve the following</label>
-                                <p><%= captcha.question %></p>
-                                <input type="hidden" name="answer" value="<%= captcha.answer %>">
-                                <div class="control">
-                                    <input class="input" type="text" id="captcha" name="captcha" required>
-                                </div>
-                            </div>
-                            <div class="field">
-                                <div class="control">
-                                    <button class="button is-primary is-fullwidth custom-button" type="submit">Register</button>
-                                </div>
-                            </div>
-                        </form>
+
+<body class="font-sans leading-normal tracking-normal relative">
+    <!-- Fondo -->
+    <div class="bg-pattern">
+        <div class="bg-radial"></div>
+    </div>
+    <section class="min-h-screen flex flex-col justify-center">
+        <div class="container mx-auto">
+            <div class="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-md">
+                <h2 class="text-3xl text-center font-semibold text-gray-800 p-6">Register</h2>
+                <% if (message) { %>
+                <p class="notification is-info"><%= message %></p>
+                <% } %>
+                <form action="/register" method="POST" class="p-6">
+                    <div class="mb-4">
+                        <label for="username" class="block text-gray-700">Username:</label>
+                        <input type="text" id="username" name="username" required
+                            class="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
-                    <div class="box">
-                        <h3 class="title is-3 has-text-centered">Security Tips:</h3>
-                        <p id="random-tip" class="has-text-centered"></p>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700">Email:</label>
+                        <input type="email" id="email" name="email" required
+                            class="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                     </div>
-                </div>
+                    <div class="mb-4">
+                        <label for="password" class="block text-gray-700">Password:</label>
+                        <input type="password" id="password" name="password" required
+                            class="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="confirm_password" class="block text-gray-700">Confirm Password:</label>
+                        <input type="password" id="confirm_password" name="confirm_password" required
+                            class="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="captcha" class="block text-gray-700">Solve the following:</label>
+                        <p><%= captcha.question %></p>
+                        <input type="hidden" name="answer" value="<%= captcha.answer %>">
+                        <input type="text" id="captcha" name="captcha" required
+                            class="form-input mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="mb-6">
+                        <button type="submit"
+                            class="mt-8 bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded w-full transition duration-300 transform hover:scale-105">
+                            Register
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-md p-6 mt-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Security Tips:</h3>
+                <p id="random-tip" class="text-center text-gray-600"></p>
             </div>
         </div>
     </section>
+
     <script>
         var securityTips = [
             "Use a unique password for your account",
@@ -121,25 +112,25 @@
             return securityTips[randomIndex];
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             var tipElement = document.getElementById("random-tip");
             tipElement.textContent = getRandomTip();
-            
+
             var passwordInput = document.getElementById("password");
             var strengthBar = document.getElementById("password-strength-bar");
             var strengthText = document.getElementById("password-strength-text");
             var togglePasswordButton = document.querySelector('.toggle-password');
 
-            passwordInput.addEventListener("input", function() {
+            passwordInput.addEventListener("input", function () {
                 var password = passwordInput.value;
                 var strength = calculatePasswordStrength(password);
                 var widthPercentage = (strength / 4) * 100;
                 strengthBar.style.width = widthPercentage + "%";
-                strengthBar.className = "progress-bar level-" + strength;
+                strengthBar.className = "h-full rounded transition-all duration-300";
                 strengthText.textContent = "Password Strength: " + strength + "/4";
             });
 
-            togglePasswordButton.addEventListener('click', function() {
+            togglePasswordButton.addEventListener('click', function () {
                 var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
                 this.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
@@ -163,4 +154,5 @@
         }
     </script>
 </body>
+
 </html>
