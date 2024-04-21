@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Gallery - Home</title>
     <link rel="stylesheet" href="/public/styles.css">
-    <link rel="shortcut icon" href="/ico/photoVoyager-ico-generate.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://avatars.githubusercontent.com/u/164266627?v=4" type="image/x-icon">
     <!-- Include Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>    
@@ -73,6 +73,24 @@
             Image <span id="currentImageNumber"></span> of <span id="totalImages"></span>
         </div>
     </div>
+
+<!-- Modal for the welcome message -->
+<div id="welcomeModal" class="modal" style="display: none;">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Welcome to our website</p>
+            <button id="closeWelcomeModal" class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <p>This website is protected by Cloudflare services and has anti-DDoS protection to ensure a secure experience for all our users.</p>
+        </section>
+        <footer class="modal-card-foot">
+            <button id="closeWelcomeModal" class="button is-primary">Got it</button>
+        </footer>
+    </div>
+</div>
+
     <script>
         var menuToggle = document.getElementById("menuToggle");
         
@@ -206,6 +224,32 @@
 
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
             document.getElementById('previewModal').style.display = 'none';
+        });
+
+        // Function to check if it's the user's first visit
+        function isFirstVisit() {
+            return !localStorage.getItem('visited');
+        }
+
+        function showWelcomeModal() {
+            const welcomeModal = document.getElementById('welcomeModal');
+            welcomeModal.style.display = 'block';
+        }
+
+        function hideWelcomeModal() {
+            const welcomeModal = document.getElementById('welcomeModal');
+            welcomeModal.style.display = 'none';
+            localStorage.setItem('visited', true);
+        }
+
+        window.onload = function() {
+            if (isFirstVisit()) {
+                showWelcomeModal();
+            }
+        };
+
+        document.getElementById('closeWelcomeModal').addEventListener('click', function() {
+            hideWelcomeModal();
         });
     </script>    
 </body>
