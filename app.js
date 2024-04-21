@@ -238,10 +238,11 @@ app.use('/logout', (req, res, next) => {
 });
 
 app.get('/active-users', (req, res) => {
-    const activeUsersCount = activeUsers.size;
+    const activeUsernames = Array.from(activeUsers.keys());
+    const activeUsersCount = activeUsernames.length;
     const isLoggedIn = req.session.isLoggedIn;
     const isAdmin = req.session.isAdmin;
-    res.render('active-users', { activeUsersCount: activeUsersCount, isLoggedIn: isLoggedIn, isAdmin: isAdmin });
+    res.render('active-users', { activeUsernames, activeUsersCount, isLoggedIn, isAdmin });
 });
 
 // Path to display the registration page
